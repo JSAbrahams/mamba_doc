@@ -51,7 +51,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF):
     reassignment     ::= expression "<-" expression
     anon-fun         ::= expression "->" expression
     (* methods or functions cannot be called using postfix notation if they take a tuple as argument *)
-    call             ::= id [ [ "." ] id ] ( tuple | expression )
+    call             ::= expression [ [ ( "." | "?." ] ) id ] ( tuple | expression )
     
     raises           ::= "raises" generics
     handle           ::= "handle" "when" newline when-cases
