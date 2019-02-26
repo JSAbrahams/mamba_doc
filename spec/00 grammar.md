@@ -1,17 +1,14 @@
 # Grammar
 
-The grammar of the language in Extended Backus-Naur Form (EBNF):py
+The grammar of the language in Extended Backus-Naur Form (EBNF):
 
     import           ::= [ "from" ( id | string) ] "import" ( id | string ) [ as ] { "," as }
-    as               ::= id "as" id
+    as               ::= id { "." id } "as" id
     
-    class-body       ::= id [ "[" id_maybe_type { "," id_maybe_type } "]" ] [ "isa" id { "," id } ] newline { newline }
+    body             ::= id [ "[" id_maybe_type { "," id_maybe_type } "]" ] [ "isa" id { "," id } ] newline { newline }
                          indent { definition newline { newline } } dedent
-    type             ::= "type" class-body
-    util             ::= "util" class-body
-    class            ::= "class" class-body
     script           ::= statements
-    module           ::= type | util | class | script
+    module           ::= "def" ( "type" | "stateless" | "stateful" ) body | script
     file             ::= import | module { newline { newline } }
     
     id               ::= "self" | ( letter | "_" ) { ( letter | number | "_" ) }
@@ -53,6 +50,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF):py
                      
     reassignment     ::= expression "<-" expression
     anon-fun         ::= expression "->" expression
+    (* methods or functions cannot be called using postfix notation if they take a tuple as argument *)
     call             ::= id [ [ "." ] id ] ( tuple | expression )
     
     raises           ::= "raises" generics
@@ -65,15 +63,19 @@ The grammar of the language in Extended Backus-Naur Form (EBNF):py
     list             ::= "[" zero-or-more-expr "]" | list-builder | list-head
     list-head        ::= id "::" expression
     list-builder     ::= "[" expression "|" expression { "," expression } "]"
-    zero-or-more-expr::= [ ( expression { "," expression } ]
+    zero-or-more-expr::= [ expression { "," expression } ]
     
+    definition       ::= "def" [ "private" ] ( variable-def | fun-def | operator-def )
     
-    definition       ::= "def" ( [ "private" ] ( variable-def | fun-def ) | operator-def )
-    variable-def     ::= [ "mut" ] ( id-maybe-type | collection ) [ "ofmut" ] [ "<-" expression ] [ forward ]
+    variable-def     ::= [ "mut" ] ( var-def | col-def )
+    var-def          ::= id-maybe-type [ "<-" expression ] [ forward ]
+    col-def          ::= collection [ "ofmut" ] [ "<-" expression ]
+    
     operator-def     ::= overridable-op [ "(" [ id-maybe-type ] ")" ] ":" type [ "->" expression ]
     fun-def          ::= id fun-args [ ":" type ] [ raises ] [ "->" expression ]
     fun-args         ::= "(" [ fun-arg ] { "," fun-arg } ")"
-    fun-arg          ::= ( id-maybe-type [ ( "<-" expression | "*" ) ] | literal )
+    fun-arg          ::= id-maybe-type [ ( "<-" expression | "*" ) ] | literal
+    
     forward          ::= "forward" id { "," id }
     
     operation        ::= relation | relation ( equality | instance-eq | binary-logic ) relation
@@ -83,7 +85,6 @@ The grammar of the language in Extended Backus-Naur Form (EBNF):py
     inner-term       ::= factor [ power inner-term ]
     factor           ::= [ unary ] ( literal | id | expression )
     
-    (* We may override either "<" or ">", but not both *)
     overrideable-op  ::= additive | "sqrt" | multiplicative | power | "=" | "<" | ">"
     unary            ::= "not" | "sqrt" | additive 
     additive         ::= "+" | "-"
