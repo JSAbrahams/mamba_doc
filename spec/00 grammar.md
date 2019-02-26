@@ -78,12 +78,12 @@ The grammar of the language in Extended Backus-Naur Form (EBNF):
     
     forward          ::= "forward" id { "," id }
     
-    operation        ::= relation | relation ( equality | instance-eq | binary-logic ) relation
+    operation        ::= relation [ ( equality | instance-eq | binary-logic ) relation ]
     relation         ::= arithmetic [ comparison relation ]
     arithmetic       ::= term [ additive arithmetic ]
     term             ::= inner-term [ multiclative term ]
     inner-term       ::= factor [ power inner-term ]
-    factor           ::= [ unary ] ( literal | id | expression )
+    factor           ::= [ unary ] ( literal | id ) | unary expression
     
     overrideable-op  ::= additive | "sqrt" | multiplicative | power | "=" | "<" | ">"
     unary            ::= "not" | "sqrt" | additive 
