@@ -11,7 +11,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF):
     module           ::= "def" ( "type" | "stateless" | "stateful" ) body | script
     file             ::= import | module { newline { newline } }
     
-    id               ::= "self" | ( letter | "_" ) { ( letter | number | "_" ) }
+    id               ::= "self" | ( letter | "_" ) { character }
     generics         ::= "[" id { "," id } "]"
     type             ::= id [ generic ] | type-tuple [ "->" type ]
     type-tuple       ::= "(" [ type { "," type } ] ")"
@@ -51,7 +51,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF):
     reassignment     ::= expression "<-" expression
     anon-fun         ::= expression "->" expression
     (* methods or functions cannot be called using postfix notation if they take a tuple as argument *)
-    call             ::= expression [ [ ( "." | "?." ] ) id ] ( tuple | expression )
+    call             ::= expression [ [ ( "." | "?." ) ] id ] ( tuple | expression )
     
     raises           ::= "raises" generics
     handle           ::= "handle" "when" newline when-cases
@@ -97,7 +97,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF):
     
     literal          ::= number | boolean | string
     number           ::= real | integer | e-notation
-    real             ::= digit "." { digit }
+    real             ::= integer "." integer | "." integer | integer "."
     integer          ::= { digit }
     e-notation       ::= ( integer | real ) ( "e" | "E" ) [ "-" ] integer
     boolean          ::= "True" | "False"
@@ -121,6 +121,6 @@ However we cannot always know in advance whether this is the case, e.g. when it 
 In This should be verified by the type checker. 
 An `expr-or-stmt` may be used when it does not matter whether something is an expression or statement, such as the body of a loop.
               
-We do not systematically desugar multiple expressions delimited by commas, as is the case in python, to tuples.
+We do not systematically desugar multiple expressions delimited by commas, or a single expression, to tuples, as is the case in Python.
 This prevents ambiguity in the grammar as specified above, and also prevents confusing situations such as `(0)` and `0` being equal.
 Instead, we only do this in specific contexts, such as in the conditional of control flows.
