@@ -1,8 +1,10 @@
 # Grammar
 
-The grammar of the language in Extended Backus-Naur Form (EBNF).
+The grammar of the language in Extended Backus-Naur Form (EBNF):py
 
-    import           ::= "from" id [ ( "use" { id { "," id } | "useall" ) ] [ "as" id ]
+    import           ::= [ "from" ( id | string) ] "import" ( id | string ) [ as ] { "," as }
+    as               ::= id "as" id
+    
     class-body       ::= id [ "[" id_maybe_type { "," id_maybe_type } "]" ] [ "isa" id { "," id } ] newline { newline }
                          indent { definition newline { newline } } dedent
     type             ::= "type" class-body
@@ -41,6 +43,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                       | expression "?or" expression
                       | expression "as" id 
                       | control-flow-expr 
+                      | collection-head
                       | call
                       | reassignment
                       | collection
@@ -59,21 +62,19 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     tuple            ::= "(" zero-or-more-expr ")"
     set              ::= "{" zero-or-more-expr "}" | set-builder
     set-builder      ::= "{" expression "|" expression { "," expression } "}"
-    list             ::= "[" zero-or-more-expr "]" | list-builder
+    list             ::= "[" zero-or-more-expr "]" | list-builder | list-head
+    list-head        ::= id "::" expression
     list-builder     ::= "[" expression "|" expression { "," expression } "]"
     zero-or-more-expr::= [ ( expression { "," expression } ]
     
-    definition       ::= "def" ( [ "private" ] ( variable-def | fun-def ) | operator-def | constructor )
+    
+    definition       ::= "def" ( [ "private" ] ( variable-def | fun-def ) | operator-def )
     variable-def     ::= [ "mut" ] ( id-maybe-type | collection ) [ "ofmut" ] [ "<-" expression ] [ forward ]
     operator-def     ::= overridable-op [ "(" [ id-maybe-type ] ")" ] ":" type [ "->" expression ]
     fun-def          ::= id fun-args [ ":" type ] [ raises ] [ "->" expression ]
     fun-args         ::= "(" [ fun-arg ] { "," fun-arg } ")"
-    fun-arg          ::= [ "vararg" ] ( id-maybe-type | literal ) [ "<-" expression ]
+    fun-arg          ::= ( id-maybe-type [ ( "<-" expression | "*" ) ] | literal )
     forward          ::= "forward" id { "," id }
-
-    constructor      ::= "init" constructor-args [ "<-" expr-or-stmt ]
-    constructor-args ::= "(" [ constructor-arg { "," constructor-arg } ] ")"
-    constructor-arg  ::= [ "vararg" ] id-maybe-type
     
     operation        ::= relation | relation ( equality | instance-eq | binary-logic ) relation
     relation         ::= arithmetic [ comparison relation ]
@@ -99,13 +100,13 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     integer          ::= { digit }
     e-notation       ::= ( integer | real ) ( "e" | "E" ) [ "-" ] integer
     boolean          ::= "True" | "False"
-    string           ::= """ { character } """
+    string           ::= "'" { character } "'"
                                      
-    control-flow-expr::= if | from | when
+    control-flow-expr::= if | match
     if               ::= "if" expression "=>" expr-or-stmt [ "else" expr-or-stmt ]
-    when             ::= "when" expression newline when-cases
-    when-cases       ::= indent { when-case { newline } } dedent
-    when-case        ::= expression "=>" expr-or-stmt
+    match            ::= "match" expression "with" newline when-cases
+    match-cases      ::= indent { when-case { newline } } dedent
+    match-case       ::= expression "=>" expr-or-stmt
     
     control-flow-stmt::= while | foreach | "break" | "continue"
     while            ::= "while" expression "=>" expr-or-stmt
@@ -114,15 +115,8 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     newline          ::= \n | \r\n
     comment          ::= "#" { character }
 
-The language uses indentation to denote code blocks. The indentation amount can't be described in the grammar directly, 
-but it does adhere to the following rules:
-
-* Every new expression or statement in a block must be preceded by n + 1 `indent`'s, where n is the amount of 
-  `indent`'s before the block
-* The same holds for every new `when-case` in a `when`
-
-A `expression` is used in a situation where an expression is required. However we cannot always know in advance whether
+An `expression` is used in a situation where an expression is required. However we cannot always know in advance whether
 this is the case, e.g. when it is a function call. In This should be verified by the type checker.
-`expr-or-stmt` may be used when it does not matter whether something is an expression or statement, such as the body of
+An `expr-or-stmt` may be used when it does not matter whether something is an expression or statement, such as the body of
 a loop.
                
