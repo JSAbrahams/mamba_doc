@@ -104,20 +104,23 @@ The grammar of the language in Extended Backus-Naur Form (EBNF):
     string           ::= "'" { character } "'"
                                      
     control-flow-expr::= if | match
-    if               ::= "if" expression "=>" expr-or-stmt [ "else" expr-or-stmt ]
-    match            ::= "match" expression "with" newline when-cases
+    if               ::= "if" expression { "," expression } "=>" expr-or-stmt [ "else" expr-or-stmt ]
+    match            ::= "match" expression { "," expression } "with" newline when-cases
     match-cases      ::= indent { when-case { newline } } dedent
-    match-case       ::= expression "=>" expr-or-stmt
+    match-case       ::= expression { "," expression }  "=>" expr-or-stmt
     
     control-flow-stmt::= while | foreach | "break" | "continue"
-    while            ::= "while" expression "=>" expr-or-stmt
+    while            ::= "while" expression { "," expression } "=>" expr-or-stmt
     foreach          ::= "foreach" expression { "," expression } "in" expression "=>" expr-or-stmt
     
     newline          ::= \n | \r\n
     comment          ::= "#" { character }
 
-An `expression` is used in a situation where an expression is required. However we cannot always know in advance whether
-this is the case, e.g. when it is a function call. In This should be verified by the type checker.
-An `expr-or-stmt` may be used when it does not matter whether something is an expression or statement, such as the body of
-a loop.
-               
+An `expression` is used in a situation where an expression is required. 
+However we cannot always know in advance whether this is the case, e.g. when it is a function call. 
+In This should be verified by the type checker. 
+An `expr-or-stmt` may be used when it does not matter whether something is an expression or statement, such as the body of a loop.
+              
+We do not systematically desugar multiple expressions delimited by commas, as is the case in python, to tuples.
+This prevents ambiguity in the grammar as specified above, and also prevents confusing situations such as `(0)` and `0` being equal.
+Instead, we only do this in specific contexts, such as in the conditional of control flows.
