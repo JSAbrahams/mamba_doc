@@ -50,7 +50,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                      
     reassignment     ::= expression "<-" expression
     anon-fun         ::= expression "->" expression
-    call             ::= id ( [ "." ] id | [ "::" id ] ) ( tuple | expression )
+    call             ::= id [ [ "." ] id ] ( tuple | expression )
     
     raises           ::= "raises" generics
     handle           ::= "handle" "when" newline when-cases
@@ -82,13 +82,14 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     inner-term       ::= factor [ power inner-term ]
     factor           ::= [ unary ] ( literal | id | expression )
     
-    overrideable-op  ::= additive | "sqrt" | multiplicative | power | "eq" | "<" | ">"
+    (* We may override either "<" or ">", but not both *)
+    overrideable-op  ::= additive | "sqrt" | multiplicative | power | "=" | "<" | ">"
     unary            ::= "not" | "sqrt" | additive 
     additive         ::= "+" | "-"
     multiplicative   ::= "*" | "/"
     power            ::= "^" | "mod"
     instance-eq      ::= "is" | "isnt" | "isa" | "isnta"
-    equality         ::= "eq" | "neq"
+    equality         ::= "=" | "/="
     comparison       ::= "<=" | ">=" | "<" | ">"
     binary-logic     ::= "and" | "or"
     
@@ -97,7 +98,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     real             ::= digit "." { digit }
     integer          ::= { digit }
     e-notation       ::= ( integer | real ) ( "e" | "E" ) [ "-" ] integer
-    boolean          ::= "true" | "false"
+    boolean          ::= "True" | "False"
     string           ::= """ { character } """
                                      
     control-flow-expr::= if | from | when
