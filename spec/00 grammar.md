@@ -32,20 +32,19 @@ The grammar of the language in Extended Backus-Naur Form (EBNF):
                       | type-def
                       | "retry"
     expression       ::= "(" expression ")" 
-                      | newline block
                       | expression ( ".." | "..=" ) expression
-                      | anon-fun
                       | expression ( raises | handle )
-                      | "return" [ expression ]
                       | expression "?or" expression
+                      | "return" [ expression ]
                       | expression "as" id 
                       | control-flow-expr 
                       | collection-head
-                      | call
+                      | newline block
                       | reassignment
                       | collection
-                      | key-value
                       | operation
+                      | anon-fun
+                      | call
                       | "_"
                      
     reassignment     ::= expression "<-" expression
