@@ -2,16 +2,17 @@
 
 The grammar of the language in Extended Backus-Naur Form (EBNF).
 
-    import           ::= "from" id [ ( "use" { id { "," id } | "useall" ) ] [ "as" id ]
-    class-body       ::= [ "isa" id { "," id } ] newline { newline } indent { definition newline { newline } } dedent
+    import           ::= [ "from" ( id | string) ] "import" ( id | string ) [ as ] { "," as }
+    as               ::= id { "." id } "as" id
+
+    body             ::= id [ "[" id_maybe_type { "," id_maybe_type } "]" ] [ "isa" id { "," id } ] newline { newline }
+
     type             ::= "type" type ( class-body | "isa" type [ conditions ] )
-    util             ::= "stateless" type class-body
-    class            ::= "stateful" type class-body
     script           ::= statements
-    module           ::= type | util | class | script
+    module           ::= ( "stateless" | "stateful" ) body | script | type
     file             ::= import | module { newline { newline } }
     
-    id               ::= "self" | ( letter | "_" ) { ( letter | number | "_" ) }
+    id               ::= "self" | ( letter | "_" ) { character }
     id_or_call       ::= id [ ( [ "." ] id | [ "::" id ] ) ( tuple | expression ) ]
 
     generics         ::= "[" id { "," id } "]"
@@ -48,7 +49,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                      
     reassignment     ::= expression "<-" expression
     anon-fun         ::= expression "->" expression
-    call             ::= id ( [ "." ] id | [ "::" id ] ) ( tuple | expression )
+    call             ::= expression [ [ ( "." | "?." ) ] id ] ( tuple | expression )
     
     raises           ::= "raises" generics
     handle           ::= "handle" "when" newline when-cases
@@ -59,67 +60,61 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     set-builder      ::= "{" expression "|" expression { "," expression } "}"
     list             ::= "[" zero-or-more-expr "]" | list-builder
     list-builder     ::= "[" expression "|" expression { "," expression } "]"
+    list-head        ::= id "::" expression
     zero-or-more-expr::= [ ( expression { "," expression } ]
     
-    definition       ::= "def" ( [ "private" ] ( variable-def | fun-def ) | operator-def | constructor )
+    definition       ::= "def" ( [ "private" ] ( variable-def | fun-def ) | operator-def )
+
     variable-def     ::= [ "mut" ] ( id-maybe-type | collection ) [ "ofmut" ] [ "<-" expression ] [ forward ]
     operator-def     ::= overridable-op [ "(" [ id-maybe-type ] ")" ] ":" type [ "->" expression ]
     fun-def          ::= id fun-args [ ":" type ] [ raises ] [ "->" expression ]
     fun-args         ::= "(" [ fun-arg ] { "," fun-arg } ")"
     fun-arg          ::= [ "vararg" ] ( id-maybe-type | literal ) [ "<-" expression ]
     forward          ::= "forward" id { "," id }
-
-    constructor      ::= "init" constructor-args [ "<-" expr-or-stmt ]
-    constructor-args ::= "(" [ constructor-arg { "," constructor-arg } ] ")"
-    constructor-arg  ::= [ "vararg" ] id-maybe-type
     
-    operation        ::= relation | relation ( equality | instance-eq | binary-logic ) relation
+    operation        ::= relation [ ( equality | instance-eq | binary-logic ) relation ]
     relation         ::= arithmetic [ comparison relation ]
     arithmetic       ::= term [ additive arithmetic ]
     term             ::= inner-term [ multiclative term ]
     inner-term       ::= factor [ power inner-term ]
     factor           ::= [ unary ] ( literal | id_or_call | expression )
     
-    overrideable-op  ::= additive | "sqrt" | multiplicative | power | "eq" | "<" | ">"
+    overrideable-op  ::= additive | "sqrt" | multiplicative | power | "=" | "<" | ">"
     unary            ::= "not" | "sqrt" | additive 
     additive         ::= "+" | "-"
     multiplicative   ::= "*" | "/"
     power            ::= "^" | "mod"
     instance-eq      ::= "is" | "isnt" | "isa" | "isnta"
-    equality         ::= "eq" | "neq"
+    equality         ::= "=" | "/="
     comparison       ::= "<=" | ">=" | "<" | ">"
     binary-logic     ::= "and" | "or"
     
     literal          ::= number | boolean | string
     number           ::= real | integer | e-notation
-    real             ::= digit "." { digit }
+    real             ::= integer "." integer | "." integer | integer "."
     integer          ::= { digit }
     e-notation       ::= ( integer | real ) ( "e" | "E" ) [ "-" ] integer
-    boolean          ::= "true" | "false"
+    boolean          ::= "True" | "False"
     string           ::= """ { character } """
                                      
-    control-flow-expr::= if | from | when
-    if               ::= "if" expression "=>" expr-or-stmt [ "else" expr-or-stmt ]
-    match            ::= "match" expression newline when-cases
+    control-flow-expr::= if | match
+    if               ::= "if" expression { "," expression } "=>" expr-or-stmt [ "else" expr-or-stmt ]
+    match            ::= "match" expression { "," expression } "with" newline when-cases
     match-cases      ::= indent { when-case { newline } } dedent
-    match-case       ::= expression "=>" expr-or-stmt
+    match-case       ::= expression { "," expression }  "=>" expr-or-stmt
     
     control-flow-stmt::= while | foreach | "break" | "continue"
-    while            ::= "while" expression "=>" expr-or-stmt
+    while            ::= "while" expression { "," expression } "=>" expr-or-stmt
     foreach          ::= "foreach" expression { "," expression } "in" expression "=>" expr-or-stmt
     
     newline          ::= \n | \r\n
     comment          ::= "#" { character }
 
-The language uses indentation to denote code blocks. The indentation amount can't be described in the grammar directly, 
-but it does adhere to the following rules:
-
-* Every new expression or statement in a block must be preceded by n + 1 `indent`'s, where n is the amount of 
-  `indent`'s before the block
-* The same holds for every new `when-case` in a `when`
-
-A `expression` is used in a situation where an expression is required. However we cannot always know in advance whether
-this is the case, e.g. when it is a function call. In This should be verified by the type checker.
-`expr-or-stmt` may be used when it does not matter whether something is an expression or statement, such as the body of
-a loop.
-               
+An `expression` is used in a situation where an expression is required. 
+However we cannot always know in advance whether this is the case, e.g. when it is a function call. 
+In This should be verified by the type checker. 
+An `expr-or-stmt` may be used when it does not matter whether something is an expression or statement, such as the body of a loop.
+              
+We do not systematically desugar multiple expressions delimited by commas, or a single expression, to tuples, as is the case in Python.
+This prevents ambiguity in the grammar as specified above, and also prevents confusing situations such as `(0)` and `0` being equal.
+Instead, we only do this in specific contexts, such as in the conditional of control flows.

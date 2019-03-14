@@ -13,14 +13,13 @@ Character | Use
 `]`       | Denote end of list, or closing bracket of generics of a class
 
 ### Mathematical Operators
-Character           | Use
---------------------|-----
-`*`                 | Multiply operator
-`^`                 | Power operator
-`-`                 | Minus operator
-`+`                 | Plus operator
-`/`                 | Division operator
-<code>&#124;</code> | Inside the set builder notation, or as `sizeof` operator around expression
+Character | Use
+----------|-----
+`*`       | Multiply operator
+`^`       | Power operator
+`-`       | Minus operator
+`+`       | Plus operator
+`/`       | Division operator
 
 ### Boolean Operators
 Character | Use
@@ -29,6 +28,8 @@ Character | Use
 `>=`      | Greater than or equal to operator
 `<`       | Less than operator
 `<=`      | Less than or equal to operator
+`=`       | Structurally equal
+`/=`      | Structurally not equal
 
 ### Assignment and Functions
 Character | Use
@@ -36,7 +37,6 @@ Character | Use
 `<-`      | Assign to definition
 `->`      | Denote start of function or method body
 `:`       | Specify type of identifier
-`::`      | Specify namespace of function call (if necessary)
 `.`       | Precedes method call, or fractional digits of real number
 `,`       | Separates arguments in collections or function or method signatures
 `_`       | Anonymous value
@@ -45,6 +45,7 @@ Character | Use
 Character | Use
 ----------|-----
 `e`       | If nested between two integer, or an integer and a real, denotes e-number
+`E`       | If nested between two integer, or an integer and a real, denotes e-number
 
 ### Comments
 Character | Use

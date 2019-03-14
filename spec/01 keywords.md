@@ -39,8 +39,6 @@ Keyword | Use
 `or`    | Or operator
 `is`    | Check whether an instance is another instance
 `isnt`  | Check whether an instance is not another instance
-`eq`    | Check whether an expression evaluates to another expression
-`neq`   | Check whether an expression does not evaluate to another expression
 `true`  | True value
 `false` | False value
 
@@ -63,7 +61,7 @@ Keyword | Use
 `if`    | Denote start of if expression or statement
 `then`  | Denote start of then branch of if
 `else`  | Denote start of else branch of if
-`when`  | Denote start of a when expression or statement
+`match` | Denote start of a match expression or statement
 
 ### Control Flow Statements
 Keyword   | Use 
