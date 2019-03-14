@@ -3,20 +3,20 @@
 The grammar of the language in Extended Backus-Naur Form (EBNF).
 
     import           ::= "from" id [ ( "use" { id { "," id } | "useall" ) ] [ "as" id ]
-    class-body       ::= id [ "[" id_maybe_type { "," id_maybe_type } "]" ] [ "isa" id { "," id } ] newline { newline }
-                         indent { definition newline { newline } } dedent
-    type             ::= "type" class-body
-    util             ::= "util" class-body
-    class            ::= "class" class-body
+    class-body       ::= [ "isa" id { "," id } ] newline { newline } indent { definition newline { newline } } dedent
+    type             ::= "type" type ( class-body | "isa" type [ conditions ] )
+    util             ::= "stateless" type class-body
+    class            ::= "stateful" type class-body
     script           ::= statements
     module           ::= type | util | class | script
     file             ::= import | module { newline { newline } }
     
     id               ::= "self" | ( letter | "_" ) { ( letter | number | "_" ) }
+    id_or_call       ::= id [ ( [ "." ] id | [ "::" id ] ) ( tuple | expression ) ]
+
     generics         ::= "[" id { "," id } "]"
-    type             ::= id [ generic ] | type-tuple [ "->" type ]
+    type             ::= ( id [ generics ] | type-tuple ) [ "->" type ]
     type-tuple       ::= "(" [ type { "," type } ] ")"
-    type-def         ::= "type" id "isa" type [ conditions ]
     id-maybe-type    ::= id [ ":" type ]
     
     conditions       ::= "when" ( newline indent { condition } dedent | condition )
@@ -25,27 +25,25 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     block            ::= indent statements dedent
     statements       ::= { expr-or-stmt { newline } }
     
-    expr-or-stmt     ::= statement | expression
-    statement        ::= ( "print" | "println" ) expression 
-                      | statement ( raises | handle )
+    expr-or-stmt     ::= statement | expression [ ( raises | handle ) ]
+    statement        ::= ( "print" | "println" ) expression
                       | control-flow-stmt
                       | definition
                       | type-def
                       | "retry"
     expression       ::= "(" expression ")" 
-                      | newline block
                       | expression ( ".." | "..=" ) expression
-                      | anon-fun
-                      | expression ( raises | handle )
-                      | "return" [ expression ]
                       | expression "?or" expression
+                      | "return" [ expression ]
                       | expression "as" id 
                       | control-flow-expr 
-                      | call
+                      | newline block
                       | reassignment
                       | collection
                       | key-value
                       | operation
+                      | anon-fun
+                      | call
                       | "_"
                      
     reassignment     ::= expression "<-" expression
@@ -80,7 +78,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     arithmetic       ::= term [ additive arithmetic ]
     term             ::= inner-term [ multiclative term ]
     inner-term       ::= factor [ power inner-term ]
-    factor           ::= [ unary ] ( literal | id | expression )
+    factor           ::= [ unary ] ( literal | id_or_call | expression )
     
     overrideable-op  ::= additive | "sqrt" | multiplicative | power | "eq" | "<" | ">"
     unary            ::= "not" | "sqrt" | additive 
