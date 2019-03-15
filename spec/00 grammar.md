@@ -48,11 +48,11 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                       | "_"
                      
     reassignment     ::= expression "<-" expression
-    anon-fun         ::= expression "->" expression
+    anon-fun         ::= "\" expression "=>" expression
     call             ::= expression [ [ ( "." | "?." ) ] id ] ( tuple | expression )
     
     raises           ::= "raises" generics
-    handle           ::= "handle" "when" newline when-cases
+    handle           ::= "handle" "when" newline match-cases
     
     collection       ::= tuple | set | list | map
     tuple            ::= "(" zero-or-more-expr ")"
@@ -98,14 +98,14 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     string           ::= """ { character } """
                                      
     control-flow-expr::= if | match
-    if               ::= "if" expression { "," expression } "=>" expr-or-stmt [ "else" expr-or-stmt ]
-    match            ::= "match" expression { "," expression } "with" newline when-cases
-    match-cases      ::= indent { when-case { newline } } dedent
+    if               ::= "if" expression { "," expression } "then" expr-or-stmt [ "else" expr-or-stmt ]
+    match            ::= "match" expression { "," expression } "with" newline match-cases
+    match-cases      ::= indent { match-case { newline } } dedent
     match-case       ::= expression { "," expression }  "=>" expr-or-stmt
     
     control-flow-stmt::= while | foreach | "break" | "continue"
-    while            ::= "while" expression { "," expression } "=>" expr-or-stmt
-    foreach          ::= "foreach" expression { "," expression } "in" expression "=>" expr-or-stmt
+    while            ::= "while" expression { "," expression } "do" expr-or-stmt
+    foreach          ::= "foreach" expression { "," expression } "in" expression "do" expr-or-stmt
     
     newline          ::= \n | \r\n
     comment          ::= "#" { character }
