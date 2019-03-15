@@ -48,7 +48,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                       | "_"
                      
     reassignment     ::= expression "<-" expression
-    anon-fun         ::= "\" expression "=>" expression
+    anon-fun         ::= "\" id-maybe-type { "," id-maybe-type } "=>" expression
     call             ::= expression [ [ ( "." | "?." ) ] id ] ( tuple | expression )
     
     raises           ::= "raises" generics
@@ -61,7 +61,9 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     list             ::= "[" zero-or-more-expr "]" | list-builder
     list-builder     ::= "[" expression "|" expression { "," expression } "]"
     list-head        ::= id "::" expression
-    zero-or-more-expr::= [ expression { "," expression } ]
+    
+    zero-or-more-expr::= [ zero-or-more-expr ]
+    one-or-more-expr ::= expression { "," expression }
     
     definition       ::= "def" ( [ "private" ] ( variable-def | fun-def ) | operator-def )
 
@@ -98,14 +100,14 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     string           ::= """ { character } """
                                      
     control-flow-expr::= if | match
-    if               ::= "if" expression { "," expression } "then" expr-or-stmt [ "else" expr-or-stmt ]
-    match            ::= "match" expression { "," expression } "with" newline match-cases
+    if               ::= "if" one-or-more-expr "then" expr-or-stmt [ "else" expr-or-stmt ]
+    match            ::= "match" one-or-more-expr "with" newline match-cases
     match-cases      ::= indent { match-case { newline } } dedent
-    match-case       ::= expression { "," expression }  "=>" expr-or-stmt
+    match-case       ::= expression "=>" expr-or-stmt
     
     control-flow-stmt::= while | foreach | "break" | "continue"
-    while            ::= "while" expression { "," expression } "do" expr-or-stmt
-    foreach          ::= "foreach" expression { "," expression } "in" expression "do" expr-or-stmt
+    while            ::= "while" one-or-more-expr "do" expr-or-stmt
+    foreach          ::= "foreach" one-or-more-expr "in" expression "do" expr-or-stmt
     
     newline          ::= \n | \r\n
     comment          ::= "#" { character }
