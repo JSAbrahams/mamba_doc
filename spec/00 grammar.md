@@ -48,11 +48,11 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                       | "_"
                      
     reassignment     ::= expression "<-" expression
-    anon-fun         ::= expression "->" expression
+    anon-fun         ::= "\" expression "=>" expression
     call             ::= expression [ [ ( "." | "?." ) ] id ] ( tuple | expression )
     
     raises           ::= "raises" generics
-    handle           ::= "handle" "when" newline when-cases
+    handle           ::= "handle" "when" newline match-cases
     
     collection       ::= tuple | set | list | map
     tuple            ::= "(" zero-or-more-expr ")"
@@ -61,13 +61,13 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     list             ::= "[" zero-or-more-expr "]" | list-builder
     list-builder     ::= "[" expression "|" expression { "," expression } "]"
     list-head        ::= id "::" expression
-    zero-or-more-expr::= [ ( expression { "," expression } ]
+    zero-or-more-expr::= [ expression { "," expression } ]
     
     definition       ::= "def" ( [ "private" ] ( variable-def | fun-def ) | operator-def )
 
     variable-def     ::= [ "mut" ] ( id-maybe-type | collection ) [ "ofmut" ] [ "<-" expression ] [ forward ]
     operator-def     ::= overridable-op [ "(" [ id-maybe-type ] ")" ] ":" type [ "->" expression ]
-    fun-def          ::= id fun-args [ ":" type ] [ raises ] [ "->" expression ]
+    fun-def          ::= id fun-args [ ":" type ] [ raises ] [ "=>" expression ]
     fun-args         ::= "(" [ fun-arg ] { "," fun-arg } ")"
     fun-arg          ::= [ "vararg" ] ( id-maybe-type | literal ) [ "<-" expression ]
     forward          ::= "forward" id { "," id }
@@ -98,14 +98,14 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     string           ::= """ { character } """
                                      
     control-flow-expr::= if | match
-    if               ::= "if" expression { "," expression } "=>" expr-or-stmt [ "else" expr-or-stmt ]
-    match            ::= "match" expression { "," expression } "with" newline when-cases
-    match-cases      ::= indent { when-case { newline } } dedent
+    if               ::= "if" expression { "," expression } "then" expr-or-stmt [ "else" expr-or-stmt ]
+    match            ::= "match" expression { "," expression } "with" newline match-cases
+    match-cases      ::= indent { match-case { newline } } dedent
     match-case       ::= expression { "," expression }  "=>" expr-or-stmt
     
     control-flow-stmt::= while | foreach | "break" | "continue"
-    while            ::= "while" expression { "," expression } "=>" expr-or-stmt
-    foreach          ::= "foreach" expression { "," expression } "in" expression "=>" expr-or-stmt
+    while            ::= "while" expression { "," expression } "do" expr-or-stmt
+    foreach          ::= "foreach" expression { "," expression } "in" expression "do" expr-or-stmt
     
     newline          ::= \n | \r\n
     comment          ::= "#" { character }
@@ -115,6 +115,7 @@ However we cannot always know in advance whether this is the case, e.g. when it 
 In This should be verified by the type checker. 
 An `expr-or-stmt` may be used when it does not matter whether something is an expression or statement, such as the body of a loop.
               
-We do not systematically desugar multiple expressions delimited by commas, or a single expression, to tuples, as is the case in Python.
+We do not systematically desugar multiple 
+delimited by commas, or a single expression, to tuples, as is the case in Python.
 This prevents ambiguity in the grammar as specified above, and also prevents confusing situations such as `(0)` and `0` being equal.
 Instead, we only do this in specific contexts, such as in the conditional of control flows.
