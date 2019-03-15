@@ -61,7 +61,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     list             ::= "[" zero-or-more-expr "]" | list-builder
     list-builder     ::= "[" expression "|" expression { "," expression } "]"
     list-head        ::= id "::" expression
-    zero-or-more-expr::= [ ( expression { "," expression } ]
+    zero-or-more-expr::= [ expression { "," expression } ]
     
     definition       ::= "def" ( [ "private" ] ( variable-def | fun-def ) | operator-def )
 
@@ -115,6 +115,7 @@ However we cannot always know in advance whether this is the case, e.g. when it 
 In This should be verified by the type checker. 
 An `expr-or-stmt` may be used when it does not matter whether something is an expression or statement, such as the body of a loop.
               
-We do not systematically desugar multiple expressions delimited by commas, or a single expression, to tuples, as is the case in Python.
+We do not systematically desugar multiple 
+delimited by commas, or a single expression, to tuples, as is the case in Python.
 This prevents ambiguity in the grammar as specified above, and also prevents confusing situations such as `(0)` and `0` being equal.
 Instead, we only do this in specific contexts, such as in the conditional of control flows.
