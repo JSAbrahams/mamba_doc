@@ -48,11 +48,11 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                       | "_"
                      
     reassignment     ::= expression "<-" expression
-    anon-fun         ::= "\" expression "=>" expression
+    anon-fun         ::= "\" id-maybe-type { "," id-maybe-type } "=>" expression
     call             ::= expression [ [ ( "." | "?." ) ] id ] ( tuple | expression )
     
     raises           ::= "raises" generics
-    handle           ::= "handle" "when" newline match-cases
+    handle           ::= "handle" newline match-cases
     
     collection       ::= tuple | set | list | map
     tuple            ::= "(" zero-or-more-expr ")"
