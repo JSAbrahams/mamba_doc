@@ -151,8 +151,10 @@ def z <- 4 + 6
 def y <- my_function(z) raises [NegativeNumber] # We state inline what this statement might throw
 
 def z <- my_function(z) handle
-  NegativeNumber => undefined # It might be good to log the error as well
-  other => other
+    err: NegativeNumber => 
+        print err # We could also log this error using a logger
+        undefined
+    num: other => num
 ```
 
 Note that my_function could also return `undefined` directly.
