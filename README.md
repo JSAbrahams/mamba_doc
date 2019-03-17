@@ -14,4 +14,13 @@ It contains both the informal description of the language and a formal specifica
 
 ## Contents
 
-[Philosophy](/philosophy/README.md)
+### [Philosophy](/philosophy/README.md)
+
+### Features of the Language
+
+#### [Control Flow](/features/control_flow/README.md)
+#### [Data](/features/data/README.md)
+#### [Modules](/features/modules/README.md)
+#### [Safety](/features/safety/README.md)
+
+### [Specification](spec/README.md)
