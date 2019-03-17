@@ -1,6 +1,32 @@
-# General Features
+⬅ [Home](/README.md)
 
-Here I outline in short some of the core features of Mamba, and their motivation, and to reveal a bit of the philosophy behind the language.
+# Features of the Language
+
+## Contents
+
+#### [Control Flow](/features/control_flow/README.md)
+##### [Control Flow Expressions](/features/control_flow/control_flow_expression.md)
+##### [Control Flow Statements](/features/control_flow/control_flow_statement.md)
+
+#### [Data](/features/data/README.md)
+##### [Collections](/features/data/collections.md)
+##### [Defining Variables](/features/data/defining_variables.md)
+##### [Operator Overloading](/features/data/operator_overloading.md)
+
+#### [Modules](/features/modules/README.md)
+##### [Script](/features/modules/script.md)
+##### [Types](/features/modules/types.md)
+##### [State and Stateless](/features/modules/state_stateless.md)
+
+#### [Safety](/features/safety/README.md)
+##### [Types](/features/safety/types.md)
+##### [Error Handling](/features/safety/error_handling.md)
+##### [Null Safety](/features/safety/null_safety.md)
+##### [Generics](/features/safety/generics.md)
+
+## General Features
+
+Here I outline in short some of the core features of Mamba, and their motivation.
 These are covered in greater detail in their respective chapters. 
 
 There are multiple programming paradigms in computer science.

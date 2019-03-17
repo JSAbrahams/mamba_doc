@@ -1,15 +1,14 @@
 ⬅ [Home](/README.md)
 
+⬅ [Features](/features/README.md)
+
 # Safety Features
 
 ## Contents
 
 ### [Types](/features/safety/types.md)
-
 ### [Error Handling](/features/safety/error_handling.md)
-
 ### [Null Safety](/features/safety/null_safety.md)
-
 ### [Generics](/features/safety/generics.md)
 
 ## Introduction

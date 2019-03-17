@@ -1,7 +1,7 @@
 # Specification
 
-[Grammar](/spec/00_grammar.md)
+## Contents
 
-[Keywords](/spec/01_keywords.md)
-
-[Special Characters](/sepc/02_keywords.md)
+### [Grammar](/spec/grammar.md)
+### [Keywords](/spec/keywords.md)
+### [Special Characters](/spec/special_characters.md)

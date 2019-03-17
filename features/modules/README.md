@@ -1,13 +1,13 @@
 ⬅ [Home](/README.md)
 
+⬅ [Features](/features/README.md)
+
 # Module Features
 
 ## Contents
 
 ### [Script](/features/modules/script.md)
-
 ### [Types](/features/modules/types.md)
-
 ### [State and Stateless](/features/modules/state_stateless.md)
 
 ## Introduction
