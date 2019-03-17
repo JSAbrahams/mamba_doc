@@ -14,4 +14,4 @@ It contains both the informal description of the language and a formal specifica
 
 ## Contents
 
-[Philosophy](/philosophy/00 index.md)
+[Philosophy](/philosophy/README.md)
