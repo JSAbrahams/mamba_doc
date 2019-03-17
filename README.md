@@ -2,6 +2,8 @@
     <img src="/image/logo_medium.png" height="250">
 </p>
 
+![GitHub](https://img.shields.io/github/license/JSAbrahams/mamba.svg?style=for-the-badge)
+ 
 # Mamba Documentation
 
 This repository contains the documentation of the [mamba](https://github.com/JSAbrahams/mamba) language.
