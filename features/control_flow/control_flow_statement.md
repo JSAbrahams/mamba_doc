@@ -9,7 +9,6 @@ condition holds.
 
 A `foreach` loop is useful when we want to iterate over items in a collection.
 
-
 We can also do the following:
 
     foreach i in 0..10 print i

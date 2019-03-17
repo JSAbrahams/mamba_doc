@@ -2,14 +2,27 @@
     <img src="/image/logo_medium.png" height="250">
 </p>
 
-![GitHub](https://img.shields.io/github/license/JSAbrahams/mamba.svg?style=for-the-badge)
+[![Travis (.org)](https://img.shields.io/travis/JSAbrahams/mamba.svg?style=for-the-badge&logo=travis)](https://travis-ci.org/JSAbrahams/mamba)
+ [![AppVeyor](https://img.shields.io/appveyor/ci/JSAbrahams/mamba.svg?style=for-the-badge&logo=appveyor)](https://ci.appveyor.com/project/JSAbrahams/mamba)
+ [![Codecov](https://img.shields.io/codecov/c/github/JSAbrahams/mamba.svg?style=for-the-badge&logo=codecov)](https://codecov.io/gh/JSAbrahams/mamba)
+ [![GitHub](https://img.shields.io/github/license/JSAbrahams/mamba.svg?style=for-the-badge)](https://github.com/JSAbrahams/mamba/blob/master/LICENSE)
+ [![Love](https://img.shields.io/badge/Built%20with-%E2%99%A5-red.svg?style=for-the-badge)](https://github.com/JSAbrahams/mamba)
  
 # Mamba Documentation
 
-This repository contains the documentation of the [mamba](https://github.com/JSAbrahams/mamba) language.
-It contains both the informal description of the language and a formal specification.
+The documentation of the Mamba language.
 
-We will be accepting contributions soon once we have everything set up!
+## Contents
 
-Eventually, it would be nice host a webpage here so that the documentation of the language is easily accessible.
-At the moment the repository consists mostly of markdown files with jotted down ideas and rough descriptions of features.
+### [Philosophy of the Language](/philosophy/README.md)
+
+### Features of the Language
+
+#### [Control Flow](/features/control_flow/README.md)
+#### [Data](/features/data/README.md)
+#### [Modules](/features/modules/README.md)
+#### [Safety](/features/safety/README.md)
+
+### [Specification](/spec/README.md)
+
+Check out the repo [here](https://github.com/JSAbrahams/mamba/).

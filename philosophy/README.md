@@ -1,4 +1,14 @@
-# Foreword
+⬅ [Home](/README.md)
+
+# Philosophy of the Language
+
+## Contents
+
+### [General Features](/philosophy/general_features.md)
+
+### [Inspirations](/philosophy/inspiration.md)
+
+## Foreword
 
 Hello dear reader.
 This document serves as an introduction to the Mamba language. 

@@ -11,7 +11,7 @@ Python    | Flexibility. Co-existence of functional and oop paradigms. Large por
 Java      | OOP concepts. Static typing rules.
 C#        | OOP concepts. Static typing rules and type inference.
 Scala     | That everything is an object, including primitives of the language. Pattern Matching.
-Kotlin    | Ranges baked into the language. Type aliases. Relying in keywords to define common use cases and patterns.
+Kotlin    | Ranges baked into the language. Type aliases. Covariance and Contravariance using `in` and `out`.
 Ada       | Custom data types (or type aliases) with ranges, which also inspired use of type refinement. Use of natural language over symbols, such as using `and` as opposed to `&&`.
 C++       | OOP concepts and operator overloading.
 C         | General programming concepts. Not so much a direct inspiration but more a general influence.

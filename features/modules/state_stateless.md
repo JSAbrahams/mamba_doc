@@ -1,4 +1,4 @@
-# Class
+# State and Stateless
 
 A class describes the properties of an instance of that class. A class encapsulates data and contains definitions. A 
 definition is either a value, or an immutable method. A definition may be private.
@@ -6,17 +6,6 @@ definition is either a value, or an immutable method. A definition may be privat
 An instance of a class may be created. A class may not inherit from another class, but may have another class as a 
 property, and forward its methods. A class may implement a type. It must then either implement the methods described in
 the type, or contain an instance of a class that forwards these methods.
-
-A immutable instantiation may not modify its fields. Therefore, it is not possible to call a method of an instantiation 
-that modifies its fields. A method modifies the fields of an instance by assigning to a variable preceded by `self`. 
-All fields of a `class` must be either defined in the constructor or at the top of the body of the `class`.
-
-`to_string` and `to_hash` of a class may be either a function or a constant. If these are not implemented, the default
-implementation is used.
-
-`eq` may be implemented. If not, the default implementation is used of recursively checking that the values are equal.
-For contained instances of the classes, this is only done for forwarded definitions. See "Operator Overloading" for more
-details on operator overloading.
 
 ## Using Type Aliases to Define State of Self
 
@@ -45,31 +34,31 @@ We can do the following:
     type DiconnectedHTTPServer isa HTTPServer when
         self not connected else ServerErr("Already connected.")
         
-    util HTTPServer
-        def stateless_message -> "This message is always the same."
+    stateless HTTPServer
+        def stateless_message => "This message is always the same."
         
-    class HTTPServer isa Server
+    stateful HTTPServer isa Server
         def connected <- false
         def mut last_message <- ""
         
         def init(self: DisconnectedHTTPServer, def ip_address: IPAddress)
         
-        def last_sent_message(self): String -> self last_message
+        def last_sent_message(self): String => self last_message
         
         # self must be disconnected
-        def connect (self: DisconnectedHTTPServer, ip_address: IPAddress): Boolean ->
+        def connect (self: DisconnectedHTTPServer, ip_address: IPAddress): Boolean =>
             # perform some operations here
             connected <- true
             true
             
         # self must be mutable to send message
-        def send_message(mut self: ConnectedHTTPServer, message: String): Boolean ->
+        def send_message(mut self: ConnectedHTTPServer, message: String): Boolean =>
             # perform some operations here
             self last_message <- message
             true
             
         # self must be connected to disconnect
-        def disconnect(self: ConnectedHTTPServer): Boolean ->
+        def disconnect(self: ConnectedHTTPServer): Boolean =>
             # perform some operations here
             connected <- false
             true
