@@ -24,3 +24,5 @@ The documentation of the Mamba language.
 #### [Safety](/features/safety/README.md)
 
 ### [Specification](/spec/README.md)
+
+Check out the repo [here](https://github.com/JSAbrahams/mamba/).

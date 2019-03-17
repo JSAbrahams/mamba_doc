@@ -1,6 +1,6 @@
-# Data Features
+⬅ [Home](/README.md)
 
-## [Home](/README.md)
+# Data Features
 
 ## Contents
 

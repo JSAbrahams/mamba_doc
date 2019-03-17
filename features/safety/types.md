@@ -92,6 +92,7 @@ check these in the body of the function. We now know that these conditions hold 
 any variable that is an `Int` to `EvenNum`. During casting, the defined conditions are checked, and the respective error
 is thrown if a condition does not hold:
 
+```
     # We can cast x to an EvenNum, which might give an error
     def x <- random_int() # here x is an Int
     def y <- x as EvenNum raises [Err]
@@ -118,6 +119,7 @@ is thrown if a condition does not hold:
     def fifth <- g(c)
     
     # first, second, third, fourth, and fifth all have type Int
+```
 
 We can also use it as a sort of post-condition of the function. We ensure that the function returns an `EvenNum`:
 
@@ -144,6 +146,7 @@ We can even ensure that the function never returns an error:
 
 So now:
 
+```
     def x <- 10 # here x is an Int
     def a <- g(x as EvenNum) raises [Err]
     
@@ -151,3 +154,4 @@ So now:
     def b <- g(a) raises Err # we don't have to cast a to an EvenNum, it is already of that type
     
     def c <- h(x) # function h never raises an error
+```

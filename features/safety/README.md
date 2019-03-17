@@ -1,6 +1,6 @@
-# Safety Features
+⬅ [Home](/README.md)
 
-## [Home](/README.md)
+# Safety Features
 
 ## Contents
 

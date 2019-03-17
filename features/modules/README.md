@@ -1,6 +1,6 @@
-# Module Features
+⬅ [Home](/README.md)
 
-## [Home](/README.md)
+# Module Features
 
 ## Contents
 

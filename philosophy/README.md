@@ -1,6 +1,6 @@
-# Philosophy of the Language
+⬅ [Home](/README.md)
 
-## [Home](/README.md)
+# Philosophy of the Language
 
 ## Contents
 
