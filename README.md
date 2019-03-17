@@ -1,3 +1,4 @@
+<link rel="shortcut icon" type="image/x-icon" href="mamba.ico">
 <p align="center">
     <img src="/image/logo_medium.png" height="250">
 </p>
