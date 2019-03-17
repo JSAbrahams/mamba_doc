@@ -4,4 +4,4 @@
 
 ### [Grammar](/spec/grammar.md)
 ### [Keywords](/spec/keywords.md)
-### [Special Characters](/sepc/special_characters.md)
+### [Special Characters](/spec/special_characters.md)

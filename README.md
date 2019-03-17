@@ -15,8 +15,7 @@ The documentation of the Mamba language.
 
 ## Contents
 
-### [Philosophy of the Language](/philosophy/README.m)
-#### [General Features](/philosophy/general_features.md)
+### [Philosophy of the Language](/philosophy/README.md)
 #### [Inspirations](/philosophy/inspiration.md)
 
 ### [Features of the Language](/features/README.md)
@@ -44,6 +43,6 @@ The documentation of the Mamba language.
 ### [Specification](/spec/README.md)
 #### [Grammar](/spec/grammar.md)
 #### [Keywords](/spec/keywords.md)
-#### [Special Characters](/sepc/special_characters.md)
+#### [Special Characters](/spec/special_characters.md)
 
 Check out the repo [here](https://github.com/JSAbrahams/mamba/).
