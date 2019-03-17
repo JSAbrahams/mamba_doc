@@ -4,8 +4,6 @@
 
 ## Contents
 
-### [General Features](/philosophy/general_features.md)
-
 ### [Inspirations](/philosophy/inspiration.md)
 
 ## Foreword
