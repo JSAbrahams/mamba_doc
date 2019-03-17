@@ -10,11 +10,11 @@
  
 # Mamba Documentation
 
-It contains both the informal description of the language and a formal specification.
+The documentation of the Mamba language.
 
 ## Contents
 
-### [Philosophy](/philosophy/README.md)
+### [Philosophy of the Language](/philosophy/README.md)
 
 ### Features of the Language
 
