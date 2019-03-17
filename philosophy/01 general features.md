@@ -63,7 +63,7 @@ Take for instance the following piece of code:
 
     foreach composer in composers do
         if composer.death is undefined then
-            println "[composer] has not died."
+            print "[composer] has not died."
         else 
             def years_ago <- today - composer.death
             print "[composer] died [years_ago] years ago."
@@ -108,7 +108,7 @@ If this has not been appended, say in the signature of a method, this method may
 `?.` can be used on expressions that may be null, and it means a method is only called if the expression is not `undefined`.
 
 ```
-# g never returns undefined. 
+# g never returns undefined.
 # If we would try this we would get a type error.
 def g(x: Int): Int -> if x > 2 then x + 2 else x - 2
 
@@ -151,7 +151,7 @@ def z <- 4 + 6
 def y <- my_function(z) raises [NegativeNumber] # We state inline what this statement might throw
 
 def z <- my_function(z) handle
-    err: NegativeNumber => 
+    err: NegativeNumber =>
         print err # We could also log this error using a logger
         undefined
     num: other => num
@@ -176,7 +176,7 @@ stateful MyStateful
   def mut field <- 10
 
   # can only be called if self is mutable
-  def method_1(mut self) => self.field <- 20 # we can assign because self is mutable
+  def method_1(self: mut) => self.field <- 20 # we can assign because self is mutable
 
   def method_2(self) => print "This doesn't modify anything."
 ```
@@ -271,7 +271,7 @@ The program is still statically typed, but now we don't require the developer to
 We can also use type aliases and type refinement to further refine types by adding conditions to them.
 Say we have the following:
 
-    type DeadComposer <- Composer where
+    type DeadComposer isa Composer where
         self.death /= undefined else Err("Composer is not dead.")
 
 We now rewrite my_function so it only works for `DeadComposer`s:
@@ -282,7 +282,7 @@ Again, we can rest assured that `composer` is a `DeadComposer` in the body of th
 To use such a function, we must explicitly cast a `Composer`:
 
 ```
-    def chopin <- Composers("Chopin")
+    def chopin <- Composer("Chopin")
     
     if chopin isa DeadComposer then
         def years_ago <- my_function(chopin)                    # chopin is dynamically casted to a DeadComposer
@@ -300,7 +300,7 @@ For instance, we can say a server is connected or disconnected by doing the foll
         def send_message(self: ConnectedServer, message: String): String
 
     type ConnectedServer isa Server where
-        connected else Err("Server is not connected")
+        self.connected else Err("Server is not connected")
 ```
 
 And we may then elsewhere implement this `Server` interface:
