@@ -1,14 +1,16 @@
 # Safety Features
 
+## [Home](/README.md)
+
 ## Contents
 
-### [Types](/features/safety/00_types.md)
+### [Types](/features/safety/types.md)
 
-### [Error Handling](/features/safety/01_error_handling.md)
+### [Error Handling](/features/safety/error_handling.md)
 
-### [Null Safety](/features/safety/02_null_safety.md)
+### [Null Safety](/features/safety/null_safety.md)
 
-### [Generics](/features/safety/03_generics.md)
+### [Generics](/features/safety/generics.md)
 
 ## Introduction
 

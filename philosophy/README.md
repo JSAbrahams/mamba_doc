@@ -1,10 +1,12 @@
 # Philosophy of the Language
 
+## [Home](/README.md)
+
 ## Contents
 
-### [General Features](/philosophy/01_general_features.md)
+### [General Features](/philosophy/general_features.md)
 
-### [Inspirations](/philosophy/02_inspiration.md)
+### [Inspirations](/philosophy/inspiration.md)
 
 ## Foreword
 

@@ -1,12 +1,14 @@
 # Module Features
 
+## [Home](/README.md)
+
 ## Contents
 
-### [Script](/features/modules/01_script.md)
+### [Script](/features/modules/script.md)
 
-### [Types](/features/modules/02_types.md)
+### [Types](/features/modules/types.md)
 
-### [State and Stateless](/features/modules/03_state_stateless.md)
+### [State and Stateless](/features/modules/state_stateless.md)
 
 ## Introduction
 

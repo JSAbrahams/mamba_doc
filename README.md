@@ -23,4 +23,4 @@ The documentation of the Mamba language.
 #### [Modules](/features/modules/README.md)
 #### [Safety](/features/safety/README.md)
 
-### [Specification](spec/README.md)
+### [Specification](/spec/README.md)

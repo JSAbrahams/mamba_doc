@@ -1,12 +1,14 @@
 # Data Features
 
+## [Home](/README.md)
+
 ## Contents
 
-### [Defining Variables](/features/data/00_defining_variables.md)
+### [Defining Variables](/features/data/defining_variables.md)
 
-### [Collections](/features/data/01_collections.md)
+### [Collections](/features/data/collections.md)
 
-### [Operator Overloading](/features/data/02_operator_overloading.md)
+### [Operator Overloading](/features/data/operator_overloading.md)
 
 ## Introduction
 
