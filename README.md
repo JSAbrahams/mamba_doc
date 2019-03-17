@@ -13,3 +13,5 @@
 It contains both the informal description of the language and a formal specification.
 
 ## Contents
+
+[Philosophy](/philosophy/00 index.md)
