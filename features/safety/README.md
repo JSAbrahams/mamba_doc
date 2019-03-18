@@ -2,6 +2,8 @@
 
 ⬅ [Features](/mamba_doc/features/README.md)
 
+⬅ [Features](/features/README.md)
+
 # Safety Features
 
 ## Contents
