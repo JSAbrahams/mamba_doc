@@ -1,10 +1,10 @@
-⬅ [Home](README.md)
+⬅ [Home](/mamba_doc/README.md)
 
 # Philosophy of the Language
 
 ## Contents
 
-### [Inspirations](philosophy/inspiration.md)
+### [Inspirations](/mamba_doc/philosophy/inspiration.md)
 
 ## Foreword
 

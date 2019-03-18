@@ -1,6 +1,6 @@
-⬅ [Home](/README.md)
+⬅ [Home](/mamba_doc/README.md)
 
-⬅ [Features](/features/README.md)
+⬅ [Features](/mamba_doc/features/README.md)
 
 # Safety Features
 

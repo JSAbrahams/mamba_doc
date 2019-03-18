@@ -1,14 +1,14 @@
-⬅ [Home](/README.md)
+⬅ [Home](/mamba_doc/README.md)
 
-⬅ [Features](/features/README.md)
+⬅ [Features](/mamba_doc/features/README.md)
 
 # Data Features
 
 ## Contents
 
-### [Collections](/features/data/collections.md)
-### [Defining Variables](/features/data/defining_variables.md)
-### [Operator Overloading](/features/data/operator_overloading.md)
+### [Collections](/mamba_doc/features/data/collections.md)
+### [Defining Variables](/mamba_doc/features/data/defining_variables.md)
+### [Operator Overloading](/mamba_doc/features/data/operator_overloading.md)
 
 ## Introduction
 

@@ -1,14 +1,14 @@
-⬅ [Home](/README.md)
+⬅ [Home](/mamba_doc/README.md)
 
-⬅ [Features](/features/README.md)
+⬅ [Features](/mamba_doc/features/README.md)
 
 # Module Features
 
 ## Contents
 
-### [Script](/features/modules/script.md)
-### [Types](/features/modules/types.md)
-### [State and Stateless](/features/modules/state_stateless.md)
+### [Script](/mamba_doc/features/modules/script.md)
+### [Types](/mamba_doc/features/modules/types.md)
+### [State and Stateless](/mamba_doc/features/modules/state_stateless.md)
 
 ## Introduction
 
