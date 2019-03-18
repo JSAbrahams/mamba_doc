@@ -1,10 +1,10 @@
-⬅ [Home](/README.md)
+⬅ [Home](README.md)
 
 # Philosophy of the Language
 
 ## Contents
 
-### [Inspirations](/philosophy/inspiration.md)
+### [Inspirations](philosophy/inspiration.md)
 
 ## Foreword
 
