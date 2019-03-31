@@ -1,4 +1,6 @@
-<link rel="shortcut icon" type="image/x-icon" href="image/logo.ico">
+<head>
+    <link rel="icon" type="image/x-icon" href="image/logo.ico">
+</head>
 
 <p align="center">
     <a href="https://github.com/JSAbrahams/mamba/blob/master/LICENSE"><img src="https://img.shields.io/github/license/JSAbrahams/mamba.svg?style=for-the-badge" alt="License"/></a>
