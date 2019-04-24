@@ -7,9 +7,7 @@
 The grammar of the language in Extended Backus-Naur Form (EBNF).
 
 ```
-    import           ::= [ "from" ( id | string) ] "import" ( id | string ) [ as ] { "," as }
-    as               ::= id { "." id } "as" id
-
+    import           ::= [ "from" id ] "import" id { "," id } [ as id { "," id } ]
     body             ::= id [ "[" id_maybe_type { "," id_maybe_type } "]" ] [ "isa" id { "," id } ] newline { newline }
 
     type             ::= "type" type ( class-body | "isa" type [ conditions ] )
@@ -23,8 +21,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     generics         ::= "[" id { "," id } "]"
     type             ::= ( id [ generics ] | type-tuple ) [ "->" type ]
     type-tuple       ::= "(" [ type { "," type } ] ")"
-    id-maybe-type    ::= id [ ":" type ]
-    id-mut-maybe-type::= id [ "mut" ] [ ":" type ]
+    id-maybe-type    ::= [ "mut" ] id [ ":" type ]
     
     conditions       ::= "when" ( newline indent { condition } dedent | condition )
     condition        ::= expression [ "else" expression ]
@@ -55,7 +52,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                       | "_"
                      
     reassignment     ::= expression "<-" expression
-    anon-fun         ::= "\" [ id-mut-maybe-type { "," id-mut-maybe-type } ] "=>" expression
+    anon-fun         ::= "\" [ id-maybe-type { "," id-maybe-type } ] "=>" expression
     call             ::= expression [ [ ( "." | "?." ) ] id ] ( tuple | expression )
     
     raises           ::= "raises" generics
@@ -74,11 +71,11 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     
     definition       ::= "def" ( [ "private" ] ( variable-def | fun-def ) | operator-def )
 
-    variable-def     ::= [ "mut" ] ( id-maybe-type | collection ) [ "ofmut" ] [ "<-" expression ] [ forward ]
-    operator-def     ::= overridable-op [ "(" [ id-mut-maybe-type ] ")" ] ":" type [ "->" expression ]
+    variable-def     ::= ( id-maybe-type | collection ) [ "ofmut" ] [ "<-" expression ] [ forward ]
+    operator-def     ::= overridable-op [ "(" [ id-mut-maybe-type ] ")" ] ":" type [ "=>" expression ]
     fun-def          ::= id fun-args [ ":" type ] [ raises ] [ "=>" expression ]
     fun-args         ::= "(" [ fun-arg ] { "," fun-arg } ")"
-    fun-arg          ::= [ "vararg" ] ( id-mut-maybe-type | literal ) [ "<-" expression ]
+    fun-arg          ::= [ "vararg" ] ( id-maybe-type | literal ) [ "<-" expression ]
     forward          ::= "forward" id { "," id }
     
     operation        ::= relation [ ( equality | instance-eq | binary-logic ) relation ]
