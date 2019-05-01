@@ -6,9 +6,11 @@
 
 # 2.2.2 Defining Variables and Functions (or Methods)
 
-Every definition must be preceded with the `def` keyword. This is not necessary when reassigning however.
+Every definition must be preceded with the `def` keyword. 
+This is not necessary when reassigning however.
 
-Functions and methods cannot be reassigned, mutable values can however. A value is an expression which may be evaluated.
+Functions and methods cannot be reassigned, mutable values can however. 
+A value is an expression which may be evaluated.
 
 ## Variables
 
@@ -43,20 +45,23 @@ We can have default values:
 
 We can now call the method as such:
 
+```
     def my_class <- MyClass()
     
     my_class.my_method(10, 2) # works fine
     my_class.my_method(10)    # exactly the same arguments as the function call above
     my_class my_method 10     # using postfix notation
     my_class my_method(10)    # also works
+```
 
 ### Default behaviour
 
-We can assign default behaviour to a method or function. To demonstrate this, we will use a toy factorial example. You
-might first write it as such:
+We can assign default behaviour to a method or function. 
+To demonstrate this, we will use a toy factorial example. 
+You might first write it as such:
 
     def factorial(n: Int) =>
-        if n eq 0 then 1
+        if n = 0 then 1
         else n * factorial (n - 1) 
 
 However, we could make this look much better with default behaviour. 

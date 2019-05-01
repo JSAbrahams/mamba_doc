@@ -10,8 +10,6 @@
 ### [2.2.2 Defining Variables](defining_variables.md)
 ### [2.2.3 Operator Overloading](operator_overloading.md)
 
-## Introduction
-
 We can declare multiple types of data.
 This can be anything from built in primitives of the language, to user defined classes.
 We can also define collections of variables.

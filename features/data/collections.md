@@ -7,18 +7,21 @@
 # 2.2.1 Collections
 
 The grammar has Four types of collections:
-- Sets
-- Lists
-- Tuples
-- Maps
+- `Set`
+- `List`
+- `Tuple`
+- `Map`
 
-A collection may be mutable. This however does not mean that its items are mutable. To make the items mutable as well 
-the `ofmut` keyword must be used.
+A collection may be mutable. 
+However, this does not mean that its items are mutable. 
+To make the items mutable as well the `ofmut` keyword must be used.
 
 ### Set
-A set is created using either `{` and `}`, or the set-builder.
 
+A set is created using either `{` and `}`, or by using the set-builder notation.
 A set is an unordered collection of unique items.
+
+Below we show some examples of how a set may be used:
 ```
     # A set may be immutable
     def animals <- { "dog", "cat", "mouse" }
@@ -40,15 +43,11 @@ A set is an unordered collection of unique items.
     
     # I can change the values of items in a set of mutable items
     countries get "Netherlands" add " - Amsterdam" 
-    for country in countries println country
-    # The above prints:
-    #  Netherlands - Amsterdam
-    #  Belgium
-    #  Luxembourg
+    for country in countries print country
 ```
 
 ### List
-A list is created using `[` ... `]`, or a list-builder.
+A list is created using `[` ... `]`, or by using the list-builder notation.
 
 A list can be accessed using an index: `list(1)`\
 A list may be ordered.
