@@ -34,5 +34,14 @@ My experience with each language varies greatly, from having used it on a near d
 Below I outline a bit what each language aims to do, and how well I believe that it achieves these goals.
 The groupings might seem somewhat arbitrary to the reader, and to some extent it is.
 I grouped them mostly by what I perceived to be their intended design goals.
+Though their grouping depends heavily on the narrative, I'm sure that someone
 
-// TODO write about intended design goals
+## The Pure OOP's: Java, SmallTalk, C#, C++, Eiffel
+
+## The Pure Functionals: Haskell
+
+## The Somewhere in Betweens: Python, Kotlin, Scala, Swift
+
+## The Scripting Languages: Perl, JavaScript
+
+## The Structurals: Ada, C, Rust, Go

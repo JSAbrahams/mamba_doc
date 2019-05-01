@@ -25,4 +25,4 @@ We also use features from other languages which have proven successful over time
 ## State and Statelessness
 
 One thing that functional programmers often state to be a major benefit of functional programming is that there is no state.
-This allows us to guarantee the following: `for any f, x = y -> f x = f y`
+This allows us to guarantee the following: `for any f, x, y: if x = y, then f x = f y`
