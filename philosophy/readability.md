@@ -50,7 +50,7 @@ Take for instance the following piece of code:
         else 
             def years_ago <- today - composer.death
             print "[composer] died [years_ago] years ago."
-            
+
 Without any knowledge of Mamba, the reader should ideally, when reading above, be able to deduce that:
 
 - We are iterating over a set (or collection) of composers.
