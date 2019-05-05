@@ -10,17 +10,39 @@
 
 A while is useful when we want to execute a statement or expression, or block, multiple times as long as a certain condition holds.
 
+A `while` statement has the form:
+```
+while <expression> do <expression or statement>
+```
+
+For instance
+```
+while some_condition(a) do
+	print "body of the loop."
+	self.some_function()
+	print "end of the loop."
+```
+
+A `while` can never be used as an expression, as it does not evaluate to anything.
+
 ### Foreach Statements
 
 A `foreach` loop is useful when we want to iterate over items in a collection.
 
 We can also do the following:
+```
+foreach i in 0..10 do print i
+```
+Which prints numbers 0 till 9.
+If we also want to print 10, we use the inclusive `..=` range operator:
+```
+foreach i in 0..=10 do print i
+```
 
-    foreach i in 0..10 do print i
-    
-Which will print all numbers from `0` to `9`. 
-Type `Int`, which is a `ClosedRange[Int]`, can be used in this manner using the `..` notation.
-It also possible to use a custom type `T` in this manner. 
-In this case it should implement `ClosedRange[T]`, and define the following method:
+We can also iterate over a set.
+```
+def my_set = { "first", "second", "third", "last" }
+foreach item in my_set do print item
+```
 
-    to_range (from: T, to: T): List[T]
+A `foreach` can never be used as an expression, as it does not evaluate to anything.
