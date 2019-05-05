@@ -105,13 +105,9 @@ We can do the following:
     stateless HTTPServer
         def stateless_message => "This message is always the same."
 
-    stateful HTTPServer isa Server
-        def ip_address
-        def connected <- false
-        def mut last_message <- ""
-
-        def init(mut self: DisconnectedHTTPServer, ip_address: IPAddress) =>
-            self up_address <- ip_address # non-mutable fields can only be assigned to in constructor/init function
+    stateful HTTPServer(mut self: DisconnectedHTTPServer, def ip_address: IPAddress) isa Server
+        def connected        <- false
+        def mut last_message <- undefined
 
         def last_sent_message(self): String => self last_message
 
