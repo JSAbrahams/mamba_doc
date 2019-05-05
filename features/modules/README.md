@@ -8,7 +8,7 @@
 
 ### [2.3.1 Script](script.md)
 ### [2.3.2 Types](types.md)
-### [2.3.3 State and Stateless](state_stateless.md)
+### [2.3.3 Stateful and Stateless](state_stateless.md)
 
 ## Introduction
 
