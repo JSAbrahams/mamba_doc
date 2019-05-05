@@ -37,7 +37,6 @@ Keyword | Use
 ---|---
 `def`   | Denote definition
 `mut`   | Denote that definition is mutable
-`ofmut` | Denote that a collection contains mutable variables
 
 ### Boolean operators
 
