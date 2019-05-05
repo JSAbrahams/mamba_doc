@@ -4,7 +4,7 @@
 
 ⬅ [2.3 📦 Modules](README.md)
 
-# 2.3.3 State and Stateless
+# 2.3.3 Stateful and Stateless
 
 Immutability, which allows us to change a value of a variable, brings with it great flexibility.
 In certain situations however, this flexibility may not be desirable and can be abused.
@@ -13,26 +13,26 @@ Therefore, we want to be able to define something as immutable, meaning that it 
 When a variable is immutable however, it should truly be immutable. 
 Often I see that even when a variable is declared immutable, it is still possible to modify it's internal fields.
 
-Therefore, must like `Rust`, we specify whether `self` is mutable in the signature of a method.
+We specify whether `self` is mutable in the signature of a method.
 This means that methods which modify the internals of an object, can only be called if said object is mutable.
+Also notice that for `self`, we do not need to specify the type.
 
 ```
 stateful MyStateful
   def mut field <- 10
 
   # can only be called if self is mutable
-  def method_1(self: mut) => self.field <- 20 # we can assign because self is mutable
+  def function_1(mut self) => self.field <- 20 # we can assign because self is mutable
 
-  def method_2(self) => print "This doesn't modify anything."
+  def function_2(self) => print "This doesn't modify anything, but we can still read internal fields: [field]."
 ```
 
-`method_1` specifies that self must be mutable for it to be called.
-`method_2` may not modify the fields of `self` as `self` is not mutable.
+`function_1` specifies that self must be mutable for it to be called.
+`function_2` may not modify the fields of `self` as `self` is not mutable.
 
 We also make a distinction between State and Statelessness, using `stateful` and `stateless`.
 Statlessness is often seen in functional programming languages.
-It also allows us to enfore the following rule: `forall f, x = y -> f(x) = f(y)`, as is the case in functional programming language.
-This might seem obivous to mathmaticians, but is not always the case when state is rought into play.
+It also allows us to enfore injectivity: `forall f, x, y: x = y -> f(x) = f(y)`, as is the case with (pure) functional languages.
 Take the following:
 ```
 stateful MyStateful 
@@ -50,8 +50,7 @@ my_stateful.f(10) # return 30
 ```
 
 Ensuring that something has no state allows us to enforce the above rule, as the same function or method will always return the same value for the same input.
-In a `stateless`, we cannot have mutable top level definitions, which allows use to enforce this rules as its internal state can never change.
-
+In a `stateless`, we cannot have mutable top level definitions, which allows use to enforce this rules as its internal state can never change:
 ```
 stateless MyStateless
   def f(x: Int): Int => x * 2
