@@ -6,33 +6,29 @@
 
 # 2.2.1 Collections
 
-The grammar has Four types of collections:
+We have three types of collections:
 - `Set`
 - `List`
 - `Tuple`
-- `Map`
 
-A collection may be mutable. 
-However, this does not mean that its items are mutable. 
-To make the items mutable as well the `ofmut` keyword must be used.
+We can also create key-value pairs as such:
+`<expression> => <expression or statement>`
+If Mamba detects we are building a data-structure which only such values, it becomes a dictionary.
+
+By default, a collection is immutable, meaning that we cannot add or remove items, or make changes to the contained
+A collection may be mutable.
 
 ### Set
 
 A set is created using either `{` and `}`, or by using the set-builder notation.
-A set is an unordered collection of unique items.
+A set is an unordered collection of unique items, meaning that we cannot access an item using its index.
 
 Below we show some examples of how a set may be used:
 ```
     # A set may be immutable
     def animals <- { "dog", "cat", "mouse" }
     # Or mutable
-    def mut instruments <- { "piano", "violin", "flute" }    
-    
-    # You can also define an immutable set of mutable variables
-    def countries ofmut <- { "Netherlands", "Belgium", "Luxembourg" }
-    # Or you can even define a mutable set of mutable variables
-    def mut composers ofmut <- { "Beethoven", "chopin", "mozart" }
-  
+    def mut instruments <- { "piano", "violin", "flute" }      
     # I can iterate over a set
     for animal in animals print animal
     
@@ -40,10 +36,8 @@ Below we show some examples of how a set may be used:
     instruments add "trombone"
     # Or remove an item from a mutable set
     instruments remove "violin"
-    
-    # I can change the values of items in a set of mutable items
-    countries get "Netherlands" add " - Amsterdam" 
-    for country in countries print country
+    # Or modify items in a mutable set
+    foreach item in instruments do item += " is an instrument"
 ```
 
 ### List
@@ -55,11 +49,9 @@ A list may be ordered.
 ### Tuple
 
 A tuple is created using `(` ... `)`.
-
 A tuple a collection of named items.
 
-### Map
+### Dictionary
 
-A map is created using `{` ... `}`, where each mapping is represented as such: `key -> value`, or a map-builder.
-
+A map is created using `{` ... `}`, where each mapping is represented as such: `key => value`.
 A map is a collection of unordered set of items.
