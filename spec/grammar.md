@@ -16,7 +16,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     file             ::= import | module { newline { newline } }
     
     id               ::= "self" | ( letter | "_" ) { character }
-    id_or_call       ::= id [ ( [ "." ] id | [ "::" id ] ) ( tuple | expression ) ]
+    id_maybe_call    ::= id [ ( [ "." ] id [ ( tuple | expression ) ] | ":" type ) ]
 
     generics         ::= "[" id { "," id } "]"
     type             ::= ( id [ generics ] | type-tuple ) [ "->" type ]
@@ -83,7 +83,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     arithmetic       ::= term [ additive arithmetic ]
     term             ::= inner-term [ multiclative term ]
     inner-term       ::= factor [ power inner-term ]
-    factor           ::= [ unary ] ( literal | id_or_call | expression )
+    factor           ::= [ unary ] ( literal | id_maybe_call | expression )
     
     overrideable-op  ::= additive | "sqrt" | multiplicative | power | "=" | "<" | ">"
     unary            ::= "not" | "sqrt" | additive 
