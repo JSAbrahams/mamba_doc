@@ -50,7 +50,7 @@ Take for instance the following piece of code:
         else 
             def years_ago <- today - composer.death
             print "[composer] died [years_ago] years ago."
-            
+
 Without any knowledge of Mamba, the reader should ideally, when reading above, be able to deduce that:
 
 - We are iterating over a set (or collection) of composers.
@@ -61,7 +61,6 @@ Without any knowledge of Mamba, the reader should ideally, when reading above, b
 Notice how little program specific syntax there is:
  
 - We use `[` ... `]` to insert variables into strings.
-- We use `:` to denote what type `ago` is.
 - `if` and `else` are used for program flow, and `print` to print something to the screen.
   - Note how we use the postfix notation when calling `print`, so we don't need to wrap the whole string in brackets.
 - Indentation is used to denote code blocks, making it easy for the eyes to follow what is being done where and when.
