@@ -78,7 +78,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     
     definition       ::= "def" ( [ "private" ] ( variable-def | fun-def ) | operator-def )
 
-    variable-def     ::= [ "mut" ] ( id-maybe-type | collection ) [ "ofmut" ] [ "<-" expression ] [ forward ]
+    variable-def     ::= [ "mut" ] ( id-maybe-type | collection ) [ "<-" expression ] [ forward ]
     operator-def     ::= overridable-op [ "(" [ id-mut-maybe-type ] ")" ] ":" type [ "->" expression ]
     fun-def          ::= id fun-args [ ":" type ] [ raises ] [ "=>" expression ]
     fun-args         ::= "(" [ fun-arg ] { "," fun-arg } ")"
