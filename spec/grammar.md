@@ -10,7 +10,11 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     import           ::= [ "from" ( id | string) ] "import" ( id | string ) [ as ] { "," as }
     as               ::= id { "." id } "as" id
 
-    body             ::= id [ "[" id_maybe_type { "," id_maybe_type } "]" ] [ "isa" id { "," id } ] newline { newline }
+    body             ::= id 
+                         [ "[" id_maybe_type { "," id_maybe_type } "]" ]
+                         [ "(" { "def" [ "private" ] id-maybe-type } ")" ]
+                         [ "isa" id { "," id } ] 
+                         newline { newline } block
 
     type             ::= "type" type ( class-body | "isa" type [ conditions ] )
     script           ::= statements
