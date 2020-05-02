@@ -149,19 +149,3 @@ to a definition if an error has occurred might bury the error, causing unexpecte
             
      # now, even if an error is thrown, l is assigned an integer, so we know that l is an Int
      println "[l] has type Int"
-    
-### Retry
-
-Say we have a non-deterministic function `connect_to_server`, which tries to connect with an online server. It may be
-that if we don't succeed the first time we may want to try another time. Instead of wrapping everything in a while loop,
-we can use the `retry` keyword:
-
-    def tries <- 0
-    def l <- g(9) handle when
-            err: MyErr =>
-                println err
-                tries += 1
-                retry if tries <= 10
-    
-The above patterns ensure that error handling is always done explicitly and at the location where the error may occur.
-There is no concept of runtime error. All errors must be explicit, and the type checker ensure that they are handled.
