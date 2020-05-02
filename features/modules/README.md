@@ -7,8 +7,9 @@
 ## 📄 Contents
 
 ### [2.3.1 Script](script.md)
-### [2.3.2 Types](types.md)
-### [2.3.3 Stateful and Stateless](state_stateless.md)
+### [2.3.2 Class](class.md)
+### [2.3.3 Types](types.md)
+### [2.3.4 Type Aliases](type_alias.md)
 
 ## Introduction
 
