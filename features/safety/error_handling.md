@@ -38,15 +38,15 @@ general we:
 
 Say we have the following error class:
 
-    class MyErr(def msg: String) isa Err
-        def to_string <- msg
+    class MyErr(def msg: String): Err
+        def to_string := msg
     
 And the following functions elsewhere (not within the error class):
 
-    def g (x: Int): Int raises[MyErr] => if x is 10 then MyErr("x was 10") else x
+    def g (x: Int): Int raise [MyErr] => if x is 10 then MyErr("x was 10") else x
     
     # We can also have a function that raises multiple types of errors
-    def h (x: Int): Int raises[MyErr, OtherErr] => if x > 10 then MyErr("bigger than 10") else OtherErr("or not")
+    def h (x: Int): Int raise [MyErr, OtherErr] => if x > 10 then MyErr("bigger than 10") else OtherErr("or not")
     
 We can also use the `Result` type to define a possible return type and error pair:
 
@@ -66,44 +66,24 @@ feature of the language, which can be convenient in certain situations, such as 
     
 Small side note: using the default behaviour feature of the language, we can rewrite `g` as such:
 
-    def g (x: Int): Int raises [MyErr] => x
-    def g (0)                          => MyErr("x was 10")
+    def g (x: Int): Int raise [MyErr] => x
+    def g (0)                         => MyErr("x was 10")
     
 Note that if the signature of a function states that a certain type of exception is thrown, it must be thrown at some
 point, or we will get a type error:
 
     # type error! exception of type MyErr is can never be raised
-    def no_err(x: Int): Int raises[MyErr] => x + 1
- 
-When calling the function, it either has to be explicitly stated that it may raise an error, which is done like so:
-
-    def l <- g(9) raises[MyErr]
-    
-Which must be added to the function signature if used within:
-
-    # ommitting the raises in the signature of f would result in a type error!
-    def f (x: Real): Real raises[MyErr] =>
-        def a <- g(9) raises[MyErr] + 1.5
-        a * 4.6
-    
-    # you can also put raises at the end of a statement or expression in a block.
-    def h (x: Real): Real raises[MyErr] =>
-        def a <- g(9) + 1.5 raises[MyErr] # If this statement would throw multiple types of exceptions, we would list 
-                                          # them here
-                                          
-        # if the above raised an error, this would never get executed, as we are immediately 'raised' out of the 
-        # function
-        a * 2.3
+    def no_err(x: Int): Int raise [MyErr] => x + 1
     
 ### Handle    
     
 We can also explicitly handle it on site. We do this using the `handle when`, which matches the type of the returned
 value to determine what to do. A good first step is to log the error. In this case, we simply print it using `println`:
     
-    def l <- g(9) + 1.5 handle when
+    def l := g(9) + 1.5 handle when
         err: MyErr => println err
         
-    # here, l has type l?, as we don not know if an error occurred or not
+    # here, l has type Int?, as we don not know if an error occurred or not
     println "we don't know whether l is an Int or None"
     
 The above would desugar to the following:
@@ -111,29 +91,18 @@ The above would desugar to the following:
     def l <- g(9) + 1.5 handle when
         err: MyErr => 
             println err
-            None # we return none, since the error case originally ended with a statement, here a print line
+            None
         ok         => ok
 
     # here, l has type l?, as we don not know if an error occurred or not
     println "we don't know whether l is an Int or None"
-    
-That's slightly better, but we still don't know whether `l` is an `Int` or `None`. We modify the above code slightly
-and get the following:
-
-    def l <- g(9) handle when
-        l: Int     => println "we know for sure that l is an Int here"
-        err: MyErr => print err
- 
-In the above case, notice how we match on based on the type of the value the function `g` returned. Using this method, 
-we can also handle different types of errors in different ways if we wish. If an error type is not covered, either by
-matching using the `Err` type, or using a default branch, the compiler will raise a type error.
  
 We may also return if we detect an error. In that case, the code after would only be executed if no error occurred:
 
-    def l <- g(9) handle when
+    def l := g(9) handle when
         err: MyErr =>
-            print err
-            return # or we may return the error: `return err`, or something else
+            println err
+            return err
             
     # if we execute this code we know for sure no error was thrown.
     # if an error was thrown this will not be executed at all
@@ -142,10 +111,10 @@ We may also return if we detect an error. In that case, the code after would onl
 We can, instead of returning, also assign a default value to l. This should be done with care however. Assigning
 to a definition if an error has occurred might bury the error, causing unexpected behaviour later during execution.
 
-    def l <- g(9) handle when
+    def l := g(9) handle when
         err: MyErr =>
             println err
-            0
-            
+            0  # this has type Int
+     
      # now, even if an error is thrown, l is assigned an integer, so we know that l is an Int
      println "[l] has type Int"
