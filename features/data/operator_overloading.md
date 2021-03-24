@@ -29,8 +29,8 @@ Say we define a stateless `Complex` as such:
          # we can also overload an unary opeator
          # when overloading, the default return value is the type itself, in this case Complex
          def sqrt () =>
-            real      <- sqrt (self real ^ 2 + self imaginary ^ 2)
-            imaginary <- sqrt (2 * self real * self imaginary)
+            real      := sqrt (self real ^ 2 + self imaginary ^ 2)
+            imaginary := sqrt (2 * self real * self imaginary)
             Complex(real, imaginary)
          
          def to_string() => "[self real] + [self imaginary]i"
@@ -40,10 +40,10 @@ Now we can use the `Complex` as follows:
 ```
     from complex use Complex
 
-    def a <- Complex(1, 2) # 1 + 2i
-    def b <- Complex(2, 3) # 2 + 3i
+    def a := Complex(1, 2) # 1 + 2i
+    def b := Complex(2, 3) # 2 + 3i
 
     # the `+` operator of Complex has been overloaded
-    def c <- a + b
+    def c := a + b
     print c # prints 3 + 5i
 ```
