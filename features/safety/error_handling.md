@@ -88,7 +88,7 @@ value to determine what to do. A good first step is to log the error. In this ca
     
 The above would desugar to the following:
 
-    def l <- g(9) + 1.5 handle when
+    def l := g(9) + 1.5 handle when
         err: MyErr => 
             println err
             None
