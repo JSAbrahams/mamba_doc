@@ -36,7 +36,6 @@ Keyword | Use
 ---|---
 `def`   | Denote definition
 `fin`   | Denote defined variable is immutable
-`mut`   | Denote that definition is mutable
 
 ### Boolean operators
 
