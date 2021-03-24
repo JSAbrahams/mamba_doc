@@ -34,8 +34,9 @@ Keyword | Use
 
 Keyword | Use 
 ---|---
-`def`   | Denote definition
-`fin`   | Denote defined variable is immutable
+`def`     | Denote definition
+`private` | Denote private variable of class
+`fin`     | Denote defined variable is immutable
 
 ### Boolean operators
 
