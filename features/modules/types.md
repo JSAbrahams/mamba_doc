@@ -20,26 +20,27 @@ Say I have a server, I could define the type as follows:
         def disconnect:         (mut Self) -> Boolean
 ```
 
+This is akin to an abstract base class in Python, but more compact.
 Now any class that implements `Server` must have these definitions.
 ```mamba
-    class MyServer(def ip_address: IPAddress) isa Server
-        def connected        <- false
-        def mut last_message <- undefined
+    class MyServer(def ip_address: IPAddress): Server
+        def connected        <- False
+        def mut last_message <- None
 
         def last_sent_message(self): String => self.last_message
 
         def connect (mut self, ip_address: IPAddress) -> Boolean throws [ServerErr] =>
             # perform some operations here
-            self.connected <- true
-            true
+            self.connected := true
+            True
 
         def send_message(mut self, message: String) -> Boolean throws [ServerErr] =>
             # perform some operations here
-            self.last_message <- message
-            true
+            self.last_message := message
+            True
 
         def disconnect(mut self) -> Boolean =>
             # perform some operations here
-            self.connected <- false
-            true
+            self.connected := false
+            True
 ```

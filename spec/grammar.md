@@ -6,33 +6,38 @@
 
 The grammar of the language in Extended Backus-Naur Form (EBNF).
 
+- ```[ ... ]``` = optional.
+- ```( ... )``` = grouping
+- ```|``` = alternative
+- ```{ ... }``` = zero or more
+
 ```
+    statements       ::= { expr-or-stmt | import | type | class }
+    
     import           ::= [ "from" id ] "import" id { "," id } [ as id { "," id } ]
-    body             ::= id [ "[" id_maybe_type { "," id_maybe_type } "]" ] [ "isa" id { "," id } ] newline { newline }
 
-    type             ::= "type" type ( class-body | "isa" type [ conditions ] )
-    script           ::= statements
-    module           ::= ( "stateless" | "stateful" ) body | script | type
-    file             ::= import | module { newline { newline } }
-    
-    id               ::= "self" | ( letter | "_" ) { character }
-    id_maybe_call    ::= id [ ( [ "." ] id [ ( tuple | expression ) ] | ":" type ) ]
-
-    generics         ::= "[" id { "," id } "]"
-    type             ::= ( id [ generics ] | type-tuple ) [ "->" type ]
-    type-tuple       ::= "(" [ type { "," type } ] ")"
-    id-maybe-type    ::= [ "mut" ] id [ ":" type ]
-    
-    conditions       ::= "when" ( newline indent { condition } dedent | condition )
+    type             ::= "type" type ( newline statements | ":" type [ conditions ] )
+    conditions       ::= ( newline indent { condition } dedent | condition )
     condition        ::= expression [ "else" expression ]
+    type-tuple       ::= "(" [ type ] { "," type } ")"
     
-    block            ::= indent statements dedent
-    statements       ::= { expr-or-stmt { newline } }
+    class            ::= "class" plain_id [ fun-args ] [ ":" ( type | type-tuple ) ] ( newline statements )
+    
+    id               ::= "self" | plain_id
+    plain-id         ::= ( letter | "_" ) { character }
+
+    generics         ::= "[" plain-id { "," plain-id } "]"
+    type             ::= ( plain-id [ generics ] | type-tuple ) [ "->" type ]
+    type-tuple       ::= "(" [ type { "," type } ] ")"
+    id-maybe-type    ::= [ "fin" ] plain-id [ ":" type ]
+    
+    block            ::= indent { statements } dedent
     
     expr-or-stmt     ::= statement | expression [ ( raises | handle ) ]
     statement        ::= ( "print" | "println" ) expression
                       | control-flow-stmt
                       | definition
+                      | reassignment
                       | type-def
                       | "retry"
                       | "pass"
@@ -43,7 +48,6 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                       | expression "as" id 
                       | control-flow-expr 
                       | newline block
-                      | reassignment
                       | collection
                       | key-value
                       | operation
@@ -51,31 +55,27 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                       | call
                       | "_"
                      
-    reassignment     ::= expression "<-" expression
+    reassignment     ::= expression ":=" expression
     anon-fun         ::= "\" [ id-maybe-type { "," id-maybe-type } ] "=>" expression
     call             ::= expression [ [ ( "." | "?." ) ] id ] ( tuple | expression )
     
-    raises           ::= "raises" generics
+    raises           ::= "raise" generics
     handle           ::= "handle" newline match-cases
     
     collection       ::= tuple | set | list | map
-    tuple            ::= "(" zero-or-more-expr ")"
-    set              ::= "{" zero-or-more-expr "}" | set-builder
+    tuple            ::= "(" { expression } ")"
+    set              ::= "{" { expression } "}" | set-builder
     set-builder      ::= "{" expression "|" expression { "," expression } "}"
-    list             ::= "[" zero-or-more-expr "]" | list-builder
+    list             ::= "[" { expression } "]" | list-builder
     list-builder     ::= "[" expression "|" expression { "," expression } "]"
-    list-head        ::= id "::" expression
     
-    zero-or-more-expr::= [ zero-or-more-expr ]
-    one-or-more-expr ::= expression { "," expression }
-    
-    definition       ::= "def" ( [ "private" ] ( variable-def | fun-def ) | operator-def )
+    definition       ::= "def" ( variable-def | fun-def ) | operator-def )
 
-    variable-def     ::= ( id-maybe-type | collection ) [ "ofmut" ] [ "<-" expression ] [ forward ]
+    variable-def     ::= ( id-maybe-type | collection ) [ "ofmut" ] [ ":=" expression ] [ forward ]
     operator-def     ::= overridable-op [ "(" [ id-mut-maybe-type ] ")" ] ":" type [ "=>" expression ]
     fun-def          ::= id fun-args [ ":" type ] [ raises ] [ "=>" expression ]
     fun-args         ::= "(" [ fun-arg ] { "," fun-arg } ")"
-    fun-arg          ::= [ "vararg" ] ( id-maybe-type | literal ) [ "<-" expression ]
+    fun-arg          ::= [ "vararg" ] ( id-maybe-type | literal ) [ ":=" expression ]
     forward          ::= "forward" id { "," id }
     
     operation        ::= relation [ ( equality | instance-eq | binary-logic ) relation ]
@@ -83,7 +83,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     arithmetic       ::= term [ additive arithmetic ]
     term             ::= inner-term [ multiclative term ]
     inner-term       ::= factor [ power inner-term ]
-    factor           ::= [ unary ] ( literal | id_maybe_call | expression )
+    factor           ::= [ unary ] ( literal | plain-id | expression )
     
     overrideable-op  ::= additive | "sqrt" | multiplicative | power | "=" | "<" | ">"
     unary            ::= "not" | "sqrt" | additive 
@@ -95,26 +95,29 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     comparison       ::= "<=" | ">=" | "<" | ">"
     binary-logic     ::= "and" | "or"
     
-    literal          ::= number | boolean | string
+    literal          ::= number | boolean | string | "None"
     number           ::= real | integer | e-notation
     real             ::= integer "." integer | "." integer | integer "."
     integer          ::= { digit }
     e-notation       ::= ( integer | real ) ( "e" | "E" ) [ "-" ] integer
     boolean          ::= "True" | "False"
     string           ::= """ { character } """
-                                     
+    
+    newline-block    ::= newline block | expr-or-stmt
+    one-or-more-expr ::= expression { "," expression }
+    
     control-flow-expr::= if | match
-    if               ::= "if" one-or-more-expr "then" expr-or-stmt [ "else" expr-or-stmt ]
+    if               ::= "if" one-or-more-expr "then" newline-block [ "else" newline-block ]
     match            ::= "match" one-or-more-expr "with" newline match-cases
     match-cases      ::= indent { match-case { newline } } dedent
     match-case       ::= expression "=>" expr-or-stmt
     
     control-flow-stmt::= while | foreach | "break" | "continue"
-    while            ::= "while" one-or-more-expr "do" expr-or-stmt
-    foreach          ::= "foreach" one-or-more-expr "in" expression "do" expr-or-stmt
+    while            ::= "while" one-or-more-expr "do" newline-block
+    foreach          ::= "for" one-or-more-expr "in" expression "do" newline-block
     
     newline          ::= \n | \r\n
-    comment          ::= "#" { character } newline | "##" { { character } newline } "##"
+    comment          ::= "#" { character } newline
 ```
 
 An `expression` is used in a situation where an expression is required. 

@@ -10,16 +10,15 @@ The following is a list of all the keywords in the language.
 
 Keyword | Use 
 ---|---
-`use`   | Specify functions when importing util
-`useall`| Specify using all functions when importing util
-`as`    | Specify function name when importing util
+`from`  | Specify where to import from
+`import`| Specify what to import
+`as`    | Specify alias of import
 
-### Modules
+### Classes
 
 Keyword | Use 
 ---|---
-`type`  | When constructing an interface or type alias
-`util`  | Denote a util
+`type`  | When constructing an interface (abstract base class) or type alias
 `class` | Denote a class
 `isa`   | Check whether an object is instance of a class
 
@@ -35,8 +34,9 @@ Keyword | Use
 
 Keyword | Use 
 ---|---
-`def`   | Denote definition
-`mut`   | Denote that definition is mutable
+`def`     | Denote definition
+`private` | Denote private variable of class
+`fin`     | Denote defined variable is immutable
 
 ### Boolean operators
 
@@ -71,7 +71,7 @@ Keyword | Use
 Keyword | Use 
 ---|---
 `while`   | Denote start of while statement
-`foreach` | Denote start of for statement
+`for`     | Denote start of for statement
 `in`      | Specify which collection to iterate over in for statement
 `do`      | Specify what needs to be done in control flow statement
 
@@ -80,6 +80,7 @@ Keyword | Use
 Keyword | Use 
 ---|---
 `print`   | Print value of an expression
+`println` | Print value of an expression
 `return`  | Return from a function or method
 `pass`    | Empty placeholder statement
 
@@ -95,4 +96,4 @@ Keyword | Use
 
 Keyword | Use 
 ---|---
-`undefined` | Denote an undefined value
+`None`  | Denote an undefined value

@@ -13,43 +13,43 @@ This can be achieved using type aliases and type refinement.
 I have a type `Server`:
 ```mamba
     Type Server
-        def connect:            (mut Self, IPAddress) -> Boolean throws [ServerErr]
-        def last_sent_message:  (Self) -> String
-        def send_message:       (mut Self, String) -> Boolean    throws [ServerErr]
-        def disconnect:         (mut Self) -> Boolean
+        def is_connected:      (mut Self, IPAddress) -> Boolean throws [ServerErr]
+        def last_sent_message: (Self) -> String
+        def send_message:      (mut Self, String) -> Boolean    throws [ServerErr]
+        def is_disconnected:   (mut Self) -> Boolean
 
-    type ServerErr(msg: String) isa Err(msg)
+    type ServerErr(msg: String): Err(msg)
 ```
 
 And I define the following type aliases:
 ```mamba
-    type ConnectedHTTPServer isa HTTPServer when
-        self connected else ServerErr("Not connected.")
+    type ConnectedHTTPServer: HTTPServer when
+        self is_connected else ServerErr("Not connected.")
 
-    type DiconnectedHTTPServer isa HTTPServer when
-        self not connected else ServerErr("Already connected.")
+    type DiconnectedHTTPServer: HTTPServer when
+        self not is_connected else ServerErr("Already connected.")
 ```
 
 We can do the following:
 ```mamba
-    class HTTPServer(mut self: DisconnectedHTTPServer, def ip_address: IPAddress) isa Server
-        def connected        <- false
-        def mut last_message <- undefined
+    class HTTPServer(mut self: DisconnectedHTTPServer, def ip_address: IPAddress): Server
+        def connected        := False
+        def mut last_message := None
 
-        def last_sent_message(self): String => self last_message
+        def last_sent_message(self): String => self.last_message
 
-        def connect (mut self: DisconnectedHTTPServer, ip_address: IPAddress) -> Boolean throws [ServerErr] =>
+        def connect(self: DisconnectedHTTPServer, ip_address: IPAddress) -> Boolean raise [ServerErr] =>
             # perform some operations here
-            self.connected <- true
-            true
+            self.connected := True
+            True
 
-        def send_message(mut self: ConnectedHTTPServer, message: String) -> Boolean throws [ServerErr] =>
+        def send_message(self: ConnectedHTTPServer, message: String) -> Boolean raise [ServerErr] =>
             # perform some operations here
-            self.last_message <- message
-            true
+            self.last_message := message
+            True
 
-        def disconnect(mut self: ConnectedHTTPServer) -> Boolean =>
+        def is_disconnected(self: ConnectedHTTPServer) -> Boolean =>
             # perform some operations here
-            self.connected <- false
-            true
+            self.connected := false
+            True
 ```

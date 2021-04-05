@@ -42,7 +42,7 @@ Keyword | Use
 
 Keyword | Use 
 ---|---
-`<-` | Assign to definition
+`:=` | Assign to definition
 `->` | Used in signature of method or signature
 `=>` | Denote the start of the body of a function or method
 `:`  | Specify type of identifier
@@ -54,7 +54,6 @@ Keyword | Use
 
 Keyword | Use 
 ---|---
-`e` | If nested between two integer, or an integer and a real, denotes e-number
 `E` | If nested between two integer, or an integer and a real, denotes e-number
 
 ### Other Operators

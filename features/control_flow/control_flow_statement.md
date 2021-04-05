@@ -27,22 +27,22 @@ A `while` can never be used as an expression, as it does not evaluate to anythin
 
 ### Foreach Statements
 
-A `foreach` loop is useful when we want to iterate over items in a collection.
+A `for` loop is useful when we want to iterate over items in a collection.
 
 We can also do the following:
 ```
-foreach i in 0..10 do print i
+for i in 0..10 do print i
 ```
 Which prints numbers 0 till 9.
 If we also want to print 10, we use the inclusive `..=` range operator:
 ```
-foreach i in 0..=10 do print i
+for i in 0..=10 do print i
 ```
 
 We can also iterate over a set.
 ```
 def my_set = { "first", "second", "third", "last" }
-foreach item in my_set do print item
+for item in my_set do print item
 ```
 
-A `foreach` can never be used as an expression, as it does not evaluate to anything.
+A `for` can never be used as an expression, as it does not evaluate to anything.
