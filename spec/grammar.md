@@ -12,8 +12,9 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
 - ```{ ... }``` = zero or more
 
 ```
-    file             ::= statements
-    statements       ::= { expr-or-stmt | import | type-def | class }
+    file             ::= any-statements
+    any-statements   ::= { expr-or-stmt | import | type-def | class | comment }
+    statements       ::= { newline } ( expr-or-stmt | import | type-def | class ) { newline } { expr-or-stmt | import | type-def | class { newline } }
     
     import           ::= [ "from" id ] "import" id { "," id } [ as id { "," id } ]
 
@@ -26,7 +27,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     generics         ::= "[" id { "," id } "]"
     
     id               ::= "self" | ( letter | "_" ) { character }
-    id-maybe-type    ::= [ "fin" ] id [ ":" type ]
+    id-maybe-type    ::= id [ ":" type ]
 
     type             ::= ( id [ generics ] | type-tuple ) [ "->" type ]
     type-tuple       ::= "(" [ type { "," type } ] ")"
@@ -35,7 +36,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     
     expr-or-stmts    ::= statements | expression
     expr-or-stmt     ::= statement | expression [ ( raises | handle ) ]
-    statement        ::= control-flow-stmt
+    statement        ::=  control-flow-stmt
                       | definition
                       | reassignment
                       | type-def
@@ -69,11 +70,11 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     list             ::= "[" { expression } "]" | list-builder
     list-builder     ::= "[" expression "|" expression { "," expression } "]"
     
-    definition       ::= "def" ( variable-def | fun-def ) | operator-def )
+    definition       ::= "def" ( variable-def | fun-def | operator-def )
 
-    variable-def     ::= ( id-maybe-type | collection ) [ "ofmut" ] [ ":=" expression ] [ forward ]
-    operator-def     ::= overridable-op [ "(" [ id-mut-maybe-type ] ")" ] ":" type [ "=>" ( expr-or-stmt | newline expr-or-stmts ) ]
-    fun-def          ::= id fun-args [ ":" type ] [ raises ] [ "=>" ( expr-or-stmt | newline expr-or-stmts ) ]
+    variable-def     ::= [ "fin" ] ( id-maybe-type | collection ) [ ":=" expression ] [ forward ]
+    operator-def     ::= [ "pure" ] overridable-op [ "(" [ id-mut-maybe-type ] ")" ] ":" type [ "=>" ( expr-or-stmt | newline expr-or-stmts ) ]
+    fun-def          ::= [ "pure" ] id fun-args [ ":" type ] [ raises ] [ "=>" ( expr-or-stmt | newline expr-or-stmts ) ]
     fun-args         ::= "(" [ fun-arg ] { "," fun-arg } ")"
     fun-arg          ::= [ "vararg" ] ( id-maybe-type | literal ) [ ":=" expression ]
     forward          ::= "forward" id { "," id }
@@ -116,7 +117,8 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     while            ::= "while" one-or-more-expr "do" newline-block
     foreach          ::= "for" one-or-more-expr "in" expression "do" newline-block
     
-    newline          ::= \n | \r\n
+    newline          ::= newline-char [ comment ]
+    newline-char     ::= \n | \r\n
     comment          ::= "#" { character } newline
 ```
 
