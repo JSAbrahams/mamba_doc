@@ -14,7 +14,8 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
 ```
     file             ::= any-statements
     any-statements   ::= { expr-or-stmt | import | type-def | class | comment }
-    statements       ::= { newline } ( expr-or-stmt | import | type-def | class ) { newline } { expr-or-stmt | import | type-def | class { newline } }
+    statements       ::= { comment | newline } ( expr-or-stmt | import | type-def | class ) { comment | newline }
+                         { expr-or-stmt | import | type-def | class { comment | newline } }
     
     import           ::= [ "from" id ] "import" id { "," id } [ as id { "," id } ]
 
@@ -23,7 +24,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     condition        ::= expression [ "else" expression ]
     type-tuple       ::= "(" [ type ] { "," type } ")"
     
-    class            ::= "class" id [ fun-args ] [ ":" ( type | type-tuple ) ] ( newline statements )
+    class            ::= "class" id [ fun-args ] [ ":" ( type | type-tuple ) ] ( newline block )
     generics         ::= "[" id { "," id } "]"
     
     id               ::= "self" | ( letter | "_" ) { character }
@@ -34,7 +35,6 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     
     block            ::= indent { statements } dedent
     
-    expr-or-stmts    ::= statements | expression
     expr-or-stmt     ::= statement | expression [ ( raises | handle ) ]
     statement        ::=  control-flow-stmt
                       | definition
@@ -73,8 +73,8 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     definition       ::= "def" ( variable-def | fun-def | operator-def )
 
     variable-def     ::= [ "fin" ] ( id-maybe-type | collection ) [ ":=" expression ] [ forward ]
-    operator-def     ::= [ "pure" ] overridable-op [ "(" [ id-mut-maybe-type ] ")" ] ":" type [ "=>" ( expr-or-stmt | newline expr-or-stmts ) ]
-    fun-def          ::= [ "pure" ] id fun-args [ ":" type ] [ raises ] [ "=>" ( expr-or-stmt | newline expr-or-stmts ) ]
+    operator-def     ::= [ "pure" ] overridable-op [ "(" [ id-mut-maybe-type ] ")" ] ":" type [ "=>" ( expr-or-stmt | newline block ) ]
+    fun-def          ::= [ "pure" ] id fun-args [ ":" type ] [ raises ] [ "=>" ( expr-or-stmt | newline block ) ]
     fun-args         ::= "(" [ fun-arg ] { "," fun-arg } ")"
     fun-arg          ::= [ "vararg" ] ( id-maybe-type | literal ) [ ":=" expression ]
     forward          ::= "forward" id { "," id }
