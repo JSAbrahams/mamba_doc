@@ -73,7 +73,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     definition       ::= "def" ( variable-def | fun-def | operator-def )
 
     variable-def     ::= [ "fin" ] ( id-maybe-type | collection ) [ ":=" expression ] [ forward ]
-    operator-def     ::= [ "pure" ] overridable-op [ "(" [ id-mut-maybe-type ] ")" ] ":" type [ "=>" ( expr-or-stmt | newline block ) ]
+    operator-def     ::= [ "pure" ] overridable-op [ "(" [ id-maybe-type ] ")" ] ":" type [ "=>" ( expr-or-stmt | newline block ) ]
     fun-def          ::= [ "pure" ] id fun-args [ ":" type ] [ raises ] [ "=>" ( expr-or-stmt | newline block ) ]
     fun-args         ::= "(" [ fun-arg ] { "," fun-arg } ")"
     fun-arg          ::= [ "vararg" ] ( id-maybe-type | literal ) [ ":=" expression ]
@@ -100,7 +100,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     number           ::= real | integer | e-notation
     real             ::= integer "." integer | "." integer | integer "."
     integer          ::= { digit }
-    e-notation       ::= ( integer | real ) ( "e" | "E" ) [ "-" ] integer
+    e-notation       ::= ( integer | real ) "E" [ "-" ] integer
     boolean          ::= "True" | "False"
     string           ::= """ { character } """
     
