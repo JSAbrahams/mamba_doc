@@ -16,7 +16,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     
     import           ::= [ "from" id ] "import" id { "," id } [ as id { "," id } ]
 
-    type-def         ::= "type" type ( newline statements | ":" type [ conditions ] )
+    type-def         ::= "type" type [ ":" type ] ( newline statements | "when" [ conditions ] )
     conditions       ::= ( newline indent { condition } dedent | condition )
     condition        ::= expression [ "else" expression ]
     type-tuple       ::= "(" [ type ] { "," type } ")"
@@ -58,7 +58,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     anon-fun         ::= "\" [ id-maybe-type { "," id-maybe-type } ] "=>" expression
     call             ::= expression [ ( "." | "?." ) ] plain-id tuple
     
-    raises           ::= "raise" generics
+    raises           ::= "raise" id { "," id }
     handle           ::= "handle" newline match-cases
     
     collection       ::= tuple | set | list | map
