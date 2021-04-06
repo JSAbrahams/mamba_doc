@@ -12,6 +12,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
 - ```{ ... }``` = zero or more
 
 ```
+    file             ::= statements
     statements       ::= { expr-or-stmt | import | type-def | class }
     
     import           ::= [ "from" id ] "import" id { "," id } [ as id { "," id } ]
@@ -21,18 +22,18 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     condition        ::= expression [ "else" expression ]
     type-tuple       ::= "(" [ type ] { "," type } ")"
     
-    class            ::= "class" plain_id [ fun-args ] [ ":" ( type | type-tuple ) ] ( newline statements )
-    generics         ::= "[" plain-id { "," plain-id } "]"
+    class            ::= "class" id [ fun-args ] [ ":" ( type | type-tuple ) ] ( newline statements )
+    generics         ::= "[" id { "," id } "]"
     
-    id               ::= "self" | plain_id
-    plain-id         ::= ( letter | "_" ) { character }
-    id-maybe-type    ::= [ "fin" ] plain-id [ ":" type ]
+    id               ::= "self" | ( letter | "_" ) { character }
+    id-maybe-type    ::= [ "fin" ] id [ ":" type ]
 
-    type             ::= ( plain-id [ generics ] | type-tuple ) [ "->" type ]
+    type             ::= ( id [ generics ] | type-tuple ) [ "->" type ]
     type-tuple       ::= "(" [ type { "," type } ] ")"
     
     block            ::= indent { statements } dedent
     
+    expr-or-stmts    ::= statements | expression
     expr-or-stmt     ::= statement | expression [ ( raises | handle ) ]
     statement        ::= control-flow-stmt
                       | definition
@@ -56,7 +57,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                      
     reassignment     ::= expression ":=" expression
     anon-fun         ::= "\" [ id-maybe-type { "," id-maybe-type } ] "=>" expression
-    call             ::= expression [ ( "." | "?." ) ] plain-id tuple
+    call             ::= expression [ ( "." | "?." ) ] id tuple
     
     raises           ::= "raise" id { "," id }
     handle           ::= "handle" newline match-cases
@@ -71,8 +72,8 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     definition       ::= "def" ( variable-def | fun-def ) | operator-def )
 
     variable-def     ::= ( id-maybe-type | collection ) [ "ofmut" ] [ ":=" expression ] [ forward ]
-    operator-def     ::= overridable-op [ "(" [ id-mut-maybe-type ] ")" ] ":" type [ "=>" expression ]
-    fun-def          ::= id fun-args [ ":" type ] [ raises ] [ "=>" expression ]
+    operator-def     ::= overridable-op [ "(" [ id-mut-maybe-type ] ")" ] ":" type [ "=>" ( expr-or-stmt | newline expr-or-stmts ) ]
+    fun-def          ::= id fun-args [ ":" type ] [ raises ] [ "=>" ( expr-or-stmt | newline expr-or-stmts ) ]
     fun-args         ::= "(" [ fun-arg ] { "," fun-arg } ")"
     fun-arg          ::= [ "vararg" ] ( id-maybe-type | literal ) [ ":=" expression ]
     forward          ::= "forward" id { "," id }
@@ -82,10 +83,10 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     arithmetic       ::= term [ additive arithmetic ]
     term             ::= inner-term [ multiclative term ]
     inner-term       ::= factor [ power inner-term ]
-    factor           ::= [ unary ] ( literal | plain-id | expression )
+    factor           ::= [ unary ] ( literal | id | expression )
     
-    overrideable-op  ::= additive | "sqrt" | multiplicative | power | "=" | "<" | ">"
-    unary            ::= "not" | "sqrt" | additive 
+    overrideable-op  ::= additive | multiplicative | power | "=" | "<" | ">"
+    unary            ::= "not" | additive 
     additive         ::= "+" | "-"
     multiplicative   ::= "*" | "/"
     power            ::= "^" | "mod"
