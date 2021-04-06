@@ -12,10 +12,9 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
 - ```{ ... }``` = zero or more
 
 ```
-    file             ::= any-statements
-    any-statements   ::= { expr-or-stmt | import | type-def | class | comment }
+    file             ::= { ( expr-or-stmt | import | type-def | class | comment ) { newline } }
     statements       ::= { comment | newline } ( expr-or-stmt | import | type-def | class ) { comment | newline }
-                         { expr-or-stmt | import | type-def | class { comment | newline } }
+                         { ( expr-or-stmt | import | type-def | class ) { comment | newline } }
     
     import           ::= [ "from" id ] "import" id { "," id } [ as id { "," id } ]
 
