@@ -12,24 +12,24 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
 - ```{ ... }``` = zero or more
 
 ```
-    statements       ::= { expr-or-stmt | import | type | class }
+    statements       ::= { expr-or-stmt | import | type-def | class }
     
     import           ::= [ "from" id ] "import" id { "," id } [ as id { "," id } ]
 
-    type             ::= "type" type ( newline statements | ":" type [ conditions ] )
+    type-def         ::= "type" type ( newline statements | ":" type [ conditions ] )
     conditions       ::= ( newline indent { condition } dedent | condition )
     condition        ::= expression [ "else" expression ]
     type-tuple       ::= "(" [ type ] { "," type } ")"
     
     class            ::= "class" plain_id [ fun-args ] [ ":" ( type | type-tuple ) ] ( newline statements )
+    generics         ::= "[" plain-id { "," plain-id } "]"
     
     id               ::= "self" | plain_id
     plain-id         ::= ( letter | "_" ) { character }
+    id-maybe-type    ::= [ "fin" ] plain-id [ ":" type ]
 
-    generics         ::= "[" plain-id { "," plain-id } "]"
     type             ::= ( plain-id [ generics ] | type-tuple ) [ "->" type ]
     type-tuple       ::= "(" [ type { "," type } ] ")"
-    id-maybe-type    ::= [ "fin" ] plain-id [ ":" type ]
     
     block            ::= indent { statements } dedent
     
@@ -56,7 +56,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
                      
     reassignment     ::= expression ":=" expression
     anon-fun         ::= "\" [ id-maybe-type { "," id-maybe-type } ] "=>" expression
-    call             ::= expression [ [ ( "." | "?." ) ] id ] ( tuple | expression )
+    call             ::= expression [ ( "." | "?." ) ] plain-id tuple
     
     raises           ::= "raise" generics
     handle           ::= "handle" newline match-cases
