@@ -34,8 +34,7 @@ The grammar of the language in Extended Backus-Naur Form (EBNF).
     block            ::= indent { statements } dedent
     
     expr-or-stmt     ::= statement | expression [ ( raises | handle ) ]
-    statement        ::= ( "print" | "println" ) expression
-                      | control-flow-stmt
+    statement        ::= control-flow-stmt
                       | definition
                       | reassignment
                       | type-def
